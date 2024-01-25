@@ -1,9 +1,5 @@
 <template>
-  <div class="red">
-    home
-    <font-awesome-icon :icon="['fas', 'user-secret']" />
-    <font-awesome-icon :icon="['fas', 'users-cog']" />
-  </div>
+  <div class="red">home</div>
 </template>
 
 <script lang="ts" setup>

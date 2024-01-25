@@ -15,25 +15,25 @@ export default defineConfig({
   publicDir: 'public',
   // 前端服务
   server: {
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     port: 9300,
-    open: true, // 启动后在浏览器中打开
+    open: true // 启动后在浏览器中打开
   },
   // 插件
   plugins: [
     vue(),
     vueJsx(),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()]
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
-    }),
+      resolvers: [ElementPlusResolver()]
+    })
   ],
   // 文件路径配置
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  },
+  }
 })

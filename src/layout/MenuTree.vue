@@ -1,18 +1,18 @@
 <template>
   <template v-for="item in props.routerList">
-    <el-sub-menu v-if="item.children" :index="item.meta.allPath" :key="item.meta.allPath">
+    <el-sub-menu class="icon-center" v-if="item.children" :index="item.meta.allPath" :key="item.meta.allPath">
       <!-- 菜单 -->
       <template #title>
         <!-- <el-icon v-if="item.meta.icon">
           <component :is="item.meta.icon"></component>
         </el-icon> -->
-        <font-awesome-icon :icon="`fa-solid ${item.meta.icon}`" />
+        <i class="icon" v-if="item.meta.icon"><font-awesome-icon :icon="item.meta.icon" /></i>
         <span class="title">{{ item.meta.title }}</span>
       </template>
       <MenuTree :routerList="item.children"></MenuTree>
     </el-sub-menu>
-    <el-menu-item v-else :index="item.meta.allPath" :key="item.meta.allPath">
-      <font-awesome-icon :icon="`fa-solid ${item.meta.icon}`" />
+    <el-menu-item class="icon-center" v-else :index="item.meta.allPath" :key="item.meta.allPath">
+      <i class="icon" v-if="item.meta.icon"><font-awesome-icon :icon="item.meta.icon" /></i>
       <template #title>
         <span class="title">{{ item.meta.title }}</span>
       </template>
@@ -28,16 +28,25 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.fas {
+.icon {
   color: var(--el-text-color-disabled);
   display: flex;
-  width: 20px;
-  height: 100%;
+  width: 24px;
   justify-content: center;
   align-items: center;
 }
-// .title {
-//   flex: 1;
-//   width: 100%;
+.icon-center {
+  // height: 40px;
+  ::v-deep(.el-sub-menu__title) {
+    padding-right: 20px;
+  }
+}
+// ::v-deep(.el-menu-item) {
+//   height: 40px !important;
+//   display: block;
 // }
+.title {
+  flex: 1;
+  overflow: hidden;
+}
 </style>

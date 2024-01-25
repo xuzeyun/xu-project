@@ -15,17 +15,17 @@ const router = createRouter({
           path: 'home',
           name: 'home',
           component: () => import('@/views/home/index.vue'),
-          meta: { title: 'home', icon: 'fa-user-secret', allPath: '/home' }
+          meta: { title: 'home', icon: 'house', allPath: '/home' }
         },
         {
           path: 'demo',
           name: 'demo',
-          meta: { title: '开发示例', icon: 'fa-user-secret', allPath: '/demo' },
+          meta: { title: '开发示例', icon: 'book', allPath: '/demo' },
           children: [
             {
               path: 'emoji',
               name: 'emoji',
-              component: () => import('@/views/demo/emoJi.vue'),
+              component: () => import('@/views/demo/emoJi/index.vue'),
               meta: { title: '表情选择器', icon: '', allPath: '/demo/emoji' }
             }
           ]

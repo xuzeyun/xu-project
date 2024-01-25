@@ -1,8 +1,24 @@
 // import dark theme
 @use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
 
-// :root {
-//   --ep-color-primary: red;
+@use './element/reElementUI.scss';
+
+// ================== 滚动条美化样式 ==================
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+/* 滑动块 */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: var(--el-color-primary);
+}
+
+/* 轨道 */
+// ::-webkit-scrollbar-track {
+//   box-shadow: inset 0 0 5px var(--el-border-color);
+//   background: var(--el-border-color);
 // }
 
 body {
@@ -11,6 +27,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
 }
+
 #app,
 body,
 html {
@@ -27,12 +44,12 @@ h6 {
 }
 
 a {
-  color: var(--ep-color-primary);
+  color: var(--el-color-primary);
 }
 
 code {
   border-radius: 2px;
   padding: 2px 4px;
-  background-color: var(--ep-color-primary-light-9);
-  color: var(--ep-color-primary);
+  background-color: var(--el-color-primary-light-9);
+  color: var(--el-color-primary);
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="on-off" @click="onOff(true)">
-    <i class="fas fa-outdent" v-show="!isCollapse"></i>
-    <i class="fas fa-indent" v-show="isCollapse"></i>
+    <font-awesome-icon icon="outdent" v-show="!isCollapse" />
+    <font-awesome-icon icon="indent" v-show="isCollapse" />
   </div>
   <el-menu class="app-menu" default-active="1" :collapse="isCollapse" :router="true" @open="open" @close="close">
     <MenuTree :routerList="routes"></MenuTree>
@@ -47,8 +47,9 @@ const onOff = () => {
 }
 .el-menu {
   border-right: none;
-  height: calc(100% - 31px);
+  height: calc(100vh - 81px);
   overflow: auto;
+  padding: 10px 0;
 }
 .on-off {
   height: 30px;
