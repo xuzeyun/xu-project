@@ -1,24 +1,22 @@
 <template>
   <div class="login-container">
-    <div class="login-box">
+    <div class="login-title">
+      <span>欢迎登录</span><br>
+      <h1>融通仓储管理系统<b>[ V1.0.0 ]</b></h1>
+    </div>
+    <div class="login-box animate__animated animate__bounceInRight">
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form" size="large" auto-complete="on" label-position="left">
         <div class="title-container">
-          <h3 class="title">登录</h3>
+          <h3 class="title">欢迎登录</h3>
         </div>
-
         <el-form-item prop="username">
-          <span class="svg-container">
-            <!-- <svg-icon icon-class="user" /> -->
-            <font-awesome-icon icon="user"></font-awesome-icon> 用户名
-          </span>
-          <el-input ref="username" v-model="loginForm.username" placeholder="" name="username" type="text" tabindex="1" auto-complete="on" />
+          <el-input ref="username" v-model="loginForm.username" placeholder="" name="username" type="text" tabindex="1" auto-complete="on">
+            <template #prepend>
+            <font-awesome-icon icon="user"></font-awesome-icon>
+          </template>
+          </el-input>
         </el-form-item>
-
         <el-form-item prop="password">
-          <span class="svg-container">
-            <font-awesome-icon icon="lock"></font-awesome-icon> 密码
-            <!-- <svg-icon icon-class="password" /> -->
-          </span>
           <el-input
             :key="passwordType"
             ref="password"
@@ -28,23 +26,18 @@
             name="password"
             tabindex="2"
             auto-complete="on"
-            @keyup.enter.native="handleLogin"
+            @keyup.enter="handleLogin"
           >
+          <template #prepend>
+            <font-awesome-icon icon="lock"></font-awesome-icon>
+          </template>
             <template #append>
               <font-awesome-icon icon="eye"></font-awesome-icon>
             </template>
           </el-input>
-          <!-- <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span> -->
         </el-form-item>
 
         <el-button :loading="loading" type="primary" style="width: 100%; margin-top: 20px; margin-bottom: 30px" @click.native.prevent="handleLogin">登录</el-button>
-
-        <!-- <div class="tips">
-        <span style="margin-right: 20px">username: admin</span>
-        <span> password: any</span>
-      </div> -->
       </el-form>
     </div>
   </div>
@@ -59,8 +52,8 @@ const loginForm = reactive({
 })
 
 const loginRules = reactive({
-  username: [{ required: true, trigger: 'blur' }],
-  password: [{ required: true, trigger: 'blur' }]
+  username: [{ required: true, trigger: 'change' }],
+  password: [{ required: true, trigger: 'change' }]
 })
 
 const loginFormRef = ref(null)
@@ -103,20 +96,40 @@ const handleLogin = () => {
 .login-container {
   display: flex;
   height: 100%;
+  overflow: hidden;
   justify-content: right;
   align-items: center;
-  background-image: url(@/assets/images/login/login_page_bg.png);
+  background-image: url(@/assets/images/login/login_bg.png);
   background-size: cover;
   background-repeat: no-repeat;
   padding-right: 10%;
-
+  padding-left: 10%;
+  .login-title{
+    color: #fff;
+    flex: 1;
+    height: 280px;
+    h1{
+      font-weight: bold;
+      font-size: 52px;
+      b{
+        font-size: 20px;
+        margin-left: 20px;
+      }
+    }
+    span{
+      font-weight: lighter;
+      font-size: 26px;
+    }
+  }
+  
   .login-box {
-    backdrop-filter: saturate(100%) blur(2px);
-    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: saturate(100%) blur(8px) brightness(100%);
+    background: rgba(255, 255, 255, 0);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     padding: 50px;
     // width:
-    width: 20%;
-    height: 400px;
+    width: 300;
+    height: 280px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     // border: solid 1px #ddd;
@@ -127,7 +140,9 @@ const handleLogin = () => {
         text-align: center;
         margin-bottom: 30px;
         font-size: 24px;
-        letter-spacing: 15px;
+        // letter-spacing: 15px;
+        color: #fff;
+        // font-weight: bold;
       }
       .svg-container {
         color: var(--el-text-color-disabled);
