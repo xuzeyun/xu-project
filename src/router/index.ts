@@ -31,13 +31,14 @@ const router = createRouter({
           ]
         }
       ]
-    }
+    },
     // 登录
-    // {
-    //   path: '/login',
-    //   component: () => import('@/views/login/index'),
-    //   hidden: true
-    // },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login/index.vue'),
+      meta: { title: 'login', icon: '', allPath: '/login' }
+    }
   ]
 })
 
