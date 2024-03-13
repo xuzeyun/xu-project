@@ -17,7 +17,17 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 9300,
-    open: true // 启动后在浏览器中打开
+    open: true, // 启动后在浏览器中打开
+    proxy: {
+      // 字符串简写写法：http://localhost:5173/foo -> http://localhost:4567/foo
+      // '/foo': 'http://localhost:4567',
+      // 带选项写法：http://localhost:5173/api/bar -> http://jsonplaceholder.typicode.com/bar
+      '/api': {
+        target: 'http://127.0.0.1:8081',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    }
   },
   // 插件
   plugins: [
