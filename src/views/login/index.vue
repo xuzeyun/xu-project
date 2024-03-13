@@ -22,18 +22,18 @@
               <font-awesome-icon icon="lock"></font-awesome-icon>
             </template>
             <template #append>
-              <font-awesome-icon icon="eye"></font-awesome-icon>
+              <font-awesome-icon icon="eye" @click="showPassword" style="cursor: pointer" :style="passwordType ? '' : 'color: var(--el-color-primary)'"></font-awesome-icon>
             </template>
           </el-input>
         </el-form-item>
 
         <el-form-item prop="code" class="code">
-          <el-input ref="code" style="flex:1" v-model="loginForm.code" placeholder="" name="code" type="text" tabindex="3" auto-complete="on">
+          <el-input ref="code" style="flex: 1" v-model="loginForm.code" placeholder="" name="code" type="text" tabindex="3" auto-complete="on">
             <template #prepend>
               <font-awesome-icon icon="shield"></font-awesome-icon>
             </template>
           </el-input>
-          <el-image style="width: 100px; height: 100%; border-radius: 4px;"  />
+          <el-image style="width: 100px; height: 100%; border-radius: 4px" :src="codeUrl" @click="GetCode" />
         </el-form-item>
 
         <el-button :loading="loading" type="primary" style="width: 100%; margin-top: 20px; margin-bottom: 30px" @click.prevent="handleLogin">登录</el-button>
@@ -42,21 +42,37 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, reactive } from 'vue'
 import axios from 'axios'
+import { onMounted } from 'vue'
 
+onMounted(() => {
+  GetCode()
+})
+
+// 获取验证码
+const GetCode = () => {
+  axios.get('/api/captcha').then(res => {
+    codeUrl.value = res.data.data.captchaImg
+    loginForm.token = res.data.data.token
+  })
+}
+// 验证码base64图片
+const codeUrl = ref('')
+
+// 登录模型
 const loginForm = reactive({
   username: '',
   password: '',
-  code: ''
+  code: '',
+  token: ''
 })
-
+// 登录验证模型
 const loginRules = reactive({
   username: [{ required: true, trigger: 'change' }],
   password: [{ required: true, trigger: 'change' }],
   code: [{ required: true, trigger: 'change' }]
-
 })
 
 const loginFormRef = ref(null)
@@ -64,37 +80,36 @@ const loading = ref(false)
 const passwordType = ref('password')
 const redirect = ref(null)
 
-const showPwd = () => {
-  if (passwordType.value === 'password') {
-    passwordType.value = ''
-  } else {
-    passwordType.value = 'password'
-  }
-  // this.$nextTick(() => {
-  //   this.$refs.password.focus()
-  // })
+const showPassword = () => {
+  passwordType.value = passwordType.value ? '' : 'password'
 }
+
+// 登录
 const handleLogin = () => {
-  axios.get('/api/posts').then(response => {
-    console.log(response)
+  loginFormRef.value.validate(valid => {
+    if (valid) {
+      // this.loading = true
+      axios({
+        method: 'post',
+        url: '/api/login',
+        params: loginForm
+      }).then(response => {
+        console.log(response)
+      })
+      // this.$store
+      //   .dispatch('user/login', this.loginForm)
+      //   .then(() => {
+      //     this.$router.push({ path: this.redirect || '/' })
+      //     this.loading = false
+      //   })
+      //   .catch(() => {
+      //     this.loading = false
+      //   })
+    } else {
+      console.log('error submit!!')
+      return false
+    }
   })
-  // this.$refs.loginForm.validate(valid => {
-  //   if (valid) {
-  //     this.loading = true
-  //     this.$store
-  //       .dispatch('user/login', this.loginForm)
-  //       .then(() => {
-  //         this.$router.push({ path: this.redirect || '/' })
-  //         this.loading = false
-  //       })
-  //       .catch(() => {
-  //         this.loading = false
-  //       })
-  //   } else {
-  //     console.log('error submit!!')
-  //     return false
-  //   }
-  // })
 }
 </script>
 
@@ -108,8 +123,8 @@ const handleLogin = () => {
   background-image: url(@/assets/images/login/login_bg.png);
   background-size: cover;
   background-repeat: no-repeat;
-  padding-right: 10%;
-  padding-left: 10%;
+  padding-right: 20%;
+  padding-left: 20%;
   .login-title {
     color: #fff;
     flex: 1;
@@ -157,8 +172,8 @@ const handleLogin = () => {
   }
 }
 .code {
-  ::v-deep(.el-form-item__content){
-    gap:10px;
+  ::v-deep(.el-form-item__content) {
+    gap: 10px;
   }
 }
 </style>
