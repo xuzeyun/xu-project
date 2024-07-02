@@ -36,7 +36,7 @@ html {
 h1,
 h2,
 h3,
-h4,
+spanh4,
 h5,
 h6 {
   margin: 0;
@@ -52,4 +52,16 @@ code {
   padding: 2px 4px;
   background-color: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
+}
+
+.el-button{
+  .icon{
+    margin-right: 5px;
+  }
+}
+
+.el-form--inline{
+  .el-input, .el-select{
+    width: 200px;
+  }
 }

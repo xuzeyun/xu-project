@@ -13,6 +13,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   publicDir: 'public',
+  define: { 'process.env': {} },
   // 前端服务
   server: {
     host: '0.0.0.0',
@@ -23,7 +24,7 @@ export default defineConfig({
       // '/foo': 'http://localhost:4567',
       // 带选项写法：http://localhost:5173/api/bar -> http://jsonplaceholder.typicode.com/bar
       '/api': {
-        target: 'http://127.0.0.1:8081',
+        target: 'http://localhost:8081',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

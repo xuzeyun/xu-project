@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <div class="login-wrap">
     <div class="login-title">
       <span>欢迎登录</span><br />
       <h1>融通仓储管理系统<b>[ V1.0.0 ]</b></h1>
@@ -36,27 +37,36 @@
           <el-image style="width: 100px; height: 100%; border-radius: 4px" :src="codeUrl" @click="GetCode" />
         </el-form-item>
 
+        <el-form-item prop="isSave">
+          <el-checkbox v-model="loginForm.isSave" label="记录登录信息" />
+        </el-form-item>
+
         <el-button :loading="loading" type="primary" style="width: 100%; margin-top: 20px; margin-bottom: 30px" @click.prevent="handleLogin">登录</el-button>
       </el-form>
     </div>
   </div>
+  </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import axios from 'axios'
-import { onMounted } from 'vue'
+import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
+import { setToken } from '@/utils/auth'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const { $Api } = getCurrentInstance().appContext.config.globalProperties
 
 onMounted(() => {
-  GetCode()
+  // GetCode()
 })
 
 // 获取验证码
 const GetCode = () => {
-  axios.get('/api/captcha').then(res => {
-    codeUrl.value = res.data.data.captchaImg
-    loginForm.token = res.data.data.token
-  })
+  // axios.get('/api/captcha').then(res => {
+  //   codeUrl.value = res.data.data.captchaImg
+  //   loginForm.token = res.data.data.token
+  // })
 }
 // 验证码base64图片
 const codeUrl = ref('')
@@ -88,43 +98,45 @@ const showPassword = () => {
 const handleLogin = () => {
   loginFormRef.value.validate(valid => {
     if (valid) {
-      // this.loading = true
-      axios({
-        method: 'post',
-        url: '/api/login',
-        params: loginForm
-      }).then(response => {
-        console.log(response)
+      loading.value = true
+      $Api.get('/api/login', loginForm).then(res => {
+        ElMessage.success(res.msg)
+        loading.value = false
+        router.push('/home')
+        setToken(res.result.token)
+        getInfo()
       })
-      // this.$store
-      //   .dispatch('user/login', this.loginForm)
-      //   .then(() => {
-      //     this.$router.push({ path: this.redirect || '/' })
-      //     this.loading = false
-      //   })
-      //   .catch(() => {
-      //     this.loading = false
-      //   })
     } else {
       console.log('error submit!!')
       return false
     }
   })
 }
+
+const getInfo = async () => {
+  let resInfo = await $Api.get('/api/getInfo', loginForm);
+
+  let resRouters = await $Api.get('/api/getRouters', loginForm)
+
+}
 </script>
 
 <style lang="scss" scoped>
 .login-container {
-  display: flex;
   height: 100%;
-  overflow: hidden;
-  justify-content: right;
-  align-items: center;
   background-image: url(@/assets/images/login/login_bg.png);
   background-size: cover;
   background-repeat: no-repeat;
-  padding-right: 20%;
-  padding-left: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .login-wrap{
+    width: 1200px;
+    display: flex;
+    overflow: hidden;
+    justify-content: right;
+    align-items: center;
+  }
   .login-title {
     color: #fff;
     flex: 1;
@@ -150,7 +162,7 @@ const handleLogin = () => {
     padding: 50px;
     // width:
     width: 300;
-    height: 280px;
+    // height: 280px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     // border: solid 1px #ddd;

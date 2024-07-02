@@ -29,6 +29,31 @@ const router = createRouter({
               meta: { title: '表情选择器', icon: '', allPath: '/demo/emoji' }
             }
           ]
+        },
+        {
+          path: 'system',
+          name: 'system',
+          meta: { title: '系统管理', icon: 'book', allPath: '/system' },
+          children: [
+            {
+              path: 'menu',
+              name: 'menu',
+              component: () => import('@/views/system/menu/index.vue'),
+              meta: { title: '菜单管理', icon: '', allPath: '/system/menu' }
+            },
+            {
+              path: 'role',
+              name: 'role',
+              component: () => import('@/views/system/role/index.vue'),
+              meta: { title: '角色管理', icon: '', allPath: '/system/role' }
+            }
+          ]
+        },
+        {
+          path: 'icon',
+          name: 'icon',
+          component: () => import('@/views/icon/index.vue'),
+          meta: { title: 'icon', icon: 'fa-solid fa-font-awesome', allPath: '/icon' }
         }
       ]
     },
