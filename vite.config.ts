@@ -26,8 +26,8 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8081',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
+        rewrite: path => path.replace(/^\/api/, '')
+      }
     }
   },
   // 插件
@@ -41,6 +41,19 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()]
     })
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // charest:false,
+        additionalData: `
+          @use 'node_modules/element-plus/theme-chalk/src/dark/css-vars.scss' as *;
+          @use '@/styles/element/reElementUI.scss';
+          @import '@/styles/mixin.scss';
+          @import '@/styles/variables.scss';
+        `
+      }
+    }
+  },
   // 文件路径配置
   resolve: {
     alias: {

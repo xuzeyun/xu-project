@@ -13,7 +13,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // import 'animate.css/source/animate.min.css';
-import 'animate.css';
+import 'animate.css'
 import './styles/index.scss'
 
 /* add icons to the library */

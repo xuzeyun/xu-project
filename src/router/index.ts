@@ -46,6 +46,12 @@ const router = createRouter({
               name: 'role',
               component: () => import('@/views/system/role/index.vue'),
               meta: { title: '角色管理', icon: '', allPath: '/system/role' }
+            },
+            {
+              path: 'post',
+              name: 'post',
+              component: () => import('@/views/system/post/index.vue'),
+              meta: { title: '岗位管理', icon: '', allPath: '/system/post' }
             }
           ]
         },

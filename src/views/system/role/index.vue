@@ -15,7 +15,7 @@
       <el-button type="danger" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="trash-alt" />批量删除</el-button>
     </el-row>
     <el-row style="margin-bottom: 10px">
-      <el-table :data="tableData" row-key="id" border @selection-change="handleSelectionChange" default-expand-all>
+      <el-table :data="tableData" row-key="id" border @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column prop="mc" label="名称" />
         <el-table-column prop="wybm" label="唯一编码" show-overflow-tooltip />
@@ -39,17 +39,17 @@
     <!-- 分页符 -->
     <el-row>
       <el-pagination
-      v-model:current-page="currentPage4"
-      v-model:page-size="pageSize4"
-      :page-sizes="[10, 20, 50, 100]"
-      :small="small"
-      :disabled="disabled"
-      :background="background"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="400"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+        v-model:current-page="currentPage4"
+        v-model:page-size="pageSize4"
+        :page-sizes="[10, 20, 50, 100]"
+        :small="small"
+        :disabled="disabled"
+        :background="background"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="400"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </el-row>
   </div>
 

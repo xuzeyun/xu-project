@@ -1,8 +1,3 @@
-// import dark theme
-@use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
-
-@use './element/reElementUI.scss';
-
 // ================== 滚动条美化样式 ==================
 /* 滚动条 */
 ::-webkit-scrollbar {
@@ -54,14 +49,15 @@ code {
   color: var(--el-color-primary);
 }
 
-.el-button{
-  .icon{
+.el-button {
+  .icon {
     margin-right: 5px;
   }
 }
 
-.el-form--inline{
-  .el-input, .el-select{
+.el-form--inline {
+  .el-input,
+  .el-select {
     width: 200px;
   }
 }
