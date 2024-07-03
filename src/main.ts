@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // import 'animate.css/source/animate.min.css';
 import 'animate.css'
+import 'element-plus/dist/index.css';
 import './styles/index.scss'
 
 /* add icons to the library */

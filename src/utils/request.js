@@ -132,7 +132,7 @@ service.interceptors.response.use(
       }
       return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
     } else {
-      ElMessage({ message: message, type: 'danger', duration: 5 * 1000 })
+      ElMessage({ message: message, type: 'error' })
       return Promise.reject(error)
     }
 
