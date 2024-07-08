@@ -10,21 +10,12 @@
     </el-row>
     <el-row class="g-tools">
       <el-col class="g-forms">
-        <BaseForm ref="formRef" v-bind="formConfig"></BaseForm>
-        <!-- <el-form ref="formRef" :inline="true" size="" :model="queryForm">
-          <el-form-item label="" prop="postName">
-            <el-input v-model="queryForm.postName" placeholder="岗位名称" clearable />
-          </el-form-item>
-          <el-form-item label="" prop="postCode">
-            <el-input v-model="queryForm.postCode" placeholder="岗位编码" clearable />
-          </el-form-item>
-          <el-form-item>
-            <el-button-group>
-              <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
-              <el-button type="" title="重置" @click="resetHandle"><font-awesome-icon icon="repeat" /></el-button>
-            </el-button-group>
-          </el-form-item>
-        </el-form> -->
+        <BaseForm ref="formRef" v-bind="formConfig">
+          <template #btns>
+            <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
+            <el-button type="" title="重置" @click="resetHandle"><font-awesome-icon icon="repeat" /></el-button>
+          </template>
+        </BaseForm>
       </el-col>
       <el-col class="g-btns">
         <el-button size="small" type="primary" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="add" />新增</el-button>
@@ -74,8 +65,8 @@ const tableConfig = reactive({
   config: {
     border: true,
     stripe: true,
-    size: ''
-    // tableLayout: 'auto'
+    size: '',
+    tableLayout: 'auto'
     // data: []
   },
   // 请求数据
@@ -105,12 +96,12 @@ const tableConfig = reactive({
 
 // 提交
 const queryHandle = () => {
-  console.log(tableRef.value, 'submit!')
   tableRef.value.reload(true)
 }
 // 重置
 const resetHandle = () => {
-  console.log('submit!')
+  formRef.value.reset()
+  tableRef.value.reload(true)
 }
 </script>
 
