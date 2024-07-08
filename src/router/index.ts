@@ -33,7 +33,7 @@ const router = createRouter({
         {
           path: 'system',
           name: 'system',
-          meta: { title: '系统管理', icon: 'book', allPath: '/system' },
+          meta: { title: '系统管理', icon: 'gear', allPath: '/system' },
           children: [
             {
               path: 'menu',
@@ -55,11 +55,19 @@ const router = createRouter({
             }
           ]
         },
+        // 开发小工具
         {
-          path: 'icon',
-          name: 'icon',
-          component: () => import('@/views/icon/index.vue'),
-          meta: { title: 'icon', icon: 'fa-solid fa-font-awesome', allPath: '/icon' }
+          path: 'tools',
+          name: 'tools',
+          meta: { title: '小工具', icon: 'fa-solid fa-font-awesome', allPath: '/icon' },
+          children: [
+            {
+              path: 'icons',
+              name: 'icons',
+              component: () => import('@/views/tools/icon/index.vue'),
+              meta: { title: 'Fas图标库', icon: '', allPath: '/tools/icons' }
+            }
+          ]
         }
       ]
     },

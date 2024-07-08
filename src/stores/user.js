@@ -1,5 +1,4 @@
 // @ts-check
-// import { defineStore, acceptHMRUpdate } from 'pinia'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore({
@@ -23,7 +22,6 @@ export const useUserStore = defineStore({
       })
     },
     login(userData) {
-      console.log(userData, 'sddddddd')
       this.$patch({
         token: userData.token || '',
         id: userData.id || '',
@@ -34,7 +32,3 @@ export const useUserStore = defineStore({
     }
   }
 })
-
-// if (import.meta.hot) {
-//   import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
-// }
