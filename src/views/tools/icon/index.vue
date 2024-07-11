@@ -1,60 +1,110 @@
 <template>
-  <div>
-    <el-row>
-      <el-form ref="formRef" :inline="true" :model="queryForm">
-        <el-form-item label="名称" prop="mc">
-          <el-input v-model="queryForm.mc" placeholder="请输入名称" clearable />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="queryHandle"><font-awesome-icon class="icon" icon="search" />查询</el-button>
-        </el-form-item>
-      </el-form>
-    </el-row>
-    <el-row class="icon-wrap">
-      <el-card class="icon-card" v-for="(item, index) in modules" :key="index" >
+  <el-row class="g-tools">
+    <el-col class="g-forms">
+      <!-- 表单组件 -->
+      <BaseForm ref="formRef" v-bind="formConfig">
+        <template #btns>
+          <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
+          <el-button type="" title="重置" @click="resetHandle"><font-awesome-icon icon="repeat" /></el-button>
+        </template>
+      </BaseForm>
+    </el-col>
+    <el-col class="g-btns">
+      <p>
+        图标总数：<b>{{ modules.length }}</b>
+      </p>
+    </el-col>
+  </el-row>
+  <el-row class="icon-wrap">
+    <el-card class="icon-card" v-for="(item, index) in initList" :key="index">
+      <div>
         <font-awesome-icon class="icon" :icon="item.iconName" />
-        <p class="g-ellipsis" :title="item.iconName">{{ item.iconName }}</p>
-      </el-card>
-    </el-row>
-  </div>
+      </div>
+      <p :title="item.iconName">
+        <span>{{ item.iconName }}</span>
+      </p>
+    </el-card>
+  </el-row>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+const modules = ref([])
+const initList = ref([])
 
 onMounted(() => {
   for (let [key, item] of Object.entries(fas)) {
-    modules.value.push({
-      key,
-      prefix: item.prefix,
-      iconName: item.iconName
-    })
+    if (modules.value.length === 0) {
+      console.log(item.iconName)
+      modules.value.push({
+        key,
+        prefix: item.prefix,
+        iconName: item.iconName
+      })
+    } else if (modules.value.length > 0) {
+      console.log(modules.value)
+      if (item.iconName != modules.value[modules.value.length - 1].iconName) {
+        modules.value.push({
+          key,
+          prefix: item.prefix,
+          iconName: item.iconName
+        })
+      }
+    }
   }
-});
-
-// 查询表单
-const queryForm = reactive({
-  mc: ''
+  initList.value = [...modules.value]
 })
 
-const modules = ref([])
+// 表单配置
+const formRef = ref(null)
+const formConfig = reactive({
+  config: {
+    size: '',
+    inline: true
+  },
+  data: {
+    name: ''
+  },
+  item: [{ prop: 'name', label: '', itemRender: { placeholder: '图标名称', name: 'ElInput', clearable: true } }]
+})
 
+// 提交
 const queryHandle = () => {
-
+  console.log(formConfig.data.name, 'formConfig.data.name')
+  let arr = modules.value.filter(item => {
+    return item.iconName == formConfig.data.name
+  })
+  initList.value = arr
+}
+// 重置
+const resetHandle = () => {
+  // 重置表单
+  formRef.value.reset()
+  // 重新加载表格
+  // tableRef.value.reload(true)
 }
 </script>
 
 <style lang="scss" scoped>
-.icon-wrap{
+.icon-wrap {
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
 }
-.icon-card{
-width: 100px;
-text-align: center;
-  p{
-    margin:10px auto 0px auto;
+.icon-card {
+  width: 150px;
+  p {
+    display: flex;
+    height: 28px;
+    align-items: center;
+    margin: 0;
+    font-size: 12px;
+    line-height: 14px;
   }
 }
 </style>

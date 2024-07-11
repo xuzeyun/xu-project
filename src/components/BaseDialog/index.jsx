@@ -9,6 +9,12 @@ const BaseTable = defineComponent({
   setup(props, { attrs }) {
     console.log()
     const show = ref(attrs.show || false)
+    const config = reactive(
+      {
+        fullscreen: false,
+        ...attrs.config
+      } || {}
+    )
 
     onMounted(() => {})
 
@@ -19,23 +25,36 @@ const BaseTable = defineComponent({
       }
     )
 
+    const viewToggle = () => {
+      config.fullscreen = !config.fullscreen
+      console.log(config.fullscreen, 'config.fullscreen')
+    }
+    const close = () => {
+      show.value = false
+    }
+
     return {
       attrs,
-      show
+      show,
+      config,
+      viewToggle,
+      close
     }
   },
   render() {
     return (
-      <ElDialog vModel={this.show} {...this.attrs.config} showClose={false}>
+      <ElDialog vModel={this.show} {...this.config} showClose={false}>
         {{
-          default: () => 'default slot',
+          default: () => <div>{this.$slots.default?.()}</div>,
           header: () => (
-            <div>
-              <span>1111</span>
-              <ElButtonGroup>
-                <ElButton type=""><font-awesome-icon icon="search" /></ElButton>
-                <ElButton type="danger"><font-awesome-icon icon="close" /></ElButton>
-              </ElButtonGroup>
+            <div className="g-dialog-header">
+              <h3>{this.config.title}</h3>
+              <a href="javascript:;" onClick={this.viewToggle}>
+                <font-awesome-icon icon={this.config.fullscreen ? 'compress' : 'expand'} />
+              </a>
+              <a href="javascript:;" onClick={this.close}>
+                <font-awesome-icon icon="xmark" />
+              </a>
             </div>
           ),
           footer: () => <div>{this.$slots.footer?.()}</div>

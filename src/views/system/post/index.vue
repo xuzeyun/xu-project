@@ -1,33 +1,31 @@
 <template>
-  <div>
-    <el-row style="margin-bottom: 10px">
-      <el-col :span="12">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>系统管理</el-breadcrumb-item>
-          <el-breadcrumb-item>岗位管理</el-breadcrumb-item>
-        </el-breadcrumb>
-      </el-col>
-    </el-row>
-    <el-row class="g-tools">
-      <el-col class="g-forms">
-        <!-- 表单组件 -->
-        <BaseForm ref="formRef" v-bind="formConfig">
-          <template #btns>
-            <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
-            <el-button type="" title="重置" @click="resetHandle"><font-awesome-icon icon="repeat" /></el-button>
-          </template>
-        </BaseForm>
-      </el-col>
-      <el-col class="g-btns">
-        <el-button size="small" type="primary" @click="dialogConfig.show = true"><font-awesome-icon class="icon" icon="add" />新增</el-button>
-        <el-button size="small" type="success" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="edit" />修改</el-button>
-        <el-button size="small" type="danger" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="trash" />删除</el-button>
-        <el-button size="small" type="warning" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="file-export" />导出</el-button>
-      </el-col>
-    </el-row>
-    <!-- 表格组件 -->
-    <BaseTable ref="tableRef" v-bind="tableConfig"></BaseTable>
-  </div>
+  <el-row style="margin-bottom: 10px">
+    <el-col :span="12">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+        <el-breadcrumb-item>岗位管理</el-breadcrumb-item>
+      </el-breadcrumb>
+    </el-col>
+  </el-row>
+  <el-row class="g-tools">
+    <el-col class="g-forms">
+      <!-- 表单组件 -->
+      <BaseForm ref="formRef" v-bind="formConfig">
+        <template #btns>
+          <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
+          <el-button type="" title="重置" @click="resetHandle"><font-awesome-icon icon="repeat" /></el-button>
+        </template>
+      </BaseForm>
+    </el-col>
+    <el-col class="g-btns">
+      <el-button size="small" type="primary" @click="dialogConfig.show = true"><font-awesome-icon class="icon" icon="add" />新增</el-button>
+      <el-button size="small" type="success" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="edit" />修改</el-button>
+      <el-button size="small" type="danger" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="trash" />删除</el-button>
+      <el-button size="small" type="warning" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="file-export" />导出</el-button>
+    </el-col>
+  </el-row>
+  <!-- 表格组件 -->
+  <BaseTable ref="tableRef" v-bind="tableConfig"></BaseTable>
   <BaseDialog v-bind="dialogConfig">
     <template #footer>
       <el-button type="primary">确认</el-button>
@@ -38,9 +36,6 @@
 
 <script setup>
 import { reactive, ref, getCurrentInstance, onMounted } from 'vue'
-import BaseTable from '@/components/BaseTable/index.jsx'
-import BaseForm from '@/components/BaseForm/index.jsx'
-import BaseDialog from '@/components/BaseDialog/index.jsx'
 const { $Api } = getCurrentInstance().appContext.config.globalProperties
 // import { ElMessageBox } from 'element-plus'
 
