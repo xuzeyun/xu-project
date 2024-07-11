@@ -10,6 +10,7 @@
     </el-row>
     <el-row class="g-tools">
       <el-col class="g-forms">
+        <!-- 表单组件 -->
         <BaseForm ref="formRef" v-bind="formConfig">
           <template #btns>
             <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
@@ -18,23 +19,32 @@
         </BaseForm>
       </el-col>
       <el-col class="g-btns">
-        <el-button size="small" type="primary" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="add" />新增</el-button>
+        <el-button size="small" type="primary" @click="dialogConfig.show = true"><font-awesome-icon class="icon" icon="add" />新增</el-button>
         <el-button size="small" type="success" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="edit" />修改</el-button>
         <el-button size="small" type="danger" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="trash" />删除</el-button>
         <el-button size="small" type="warning" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="file-export" />导出</el-button>
       </el-col>
     </el-row>
+    <!-- 表格组件 -->
     <BaseTable ref="tableRef" v-bind="tableConfig"></BaseTable>
   </div>
+  <BaseDialog v-bind="dialogConfig">
+    <template #footer>
+      <el-button type="primary">确认</el-button>
+      <el-button @click="dialogConfig.show = false">取消</el-button>
+    </template>
+  </BaseDialog>
 </template>
 
 <script setup>
-import { reactive, ref, getCurrentInstance } from 'vue'
+import { reactive, ref, getCurrentInstance, onMounted } from 'vue'
 import BaseTable from '@/components/BaseTable/index.jsx'
 import BaseForm from '@/components/BaseForm/index.jsx'
+import BaseDialog from '@/components/BaseDialog/index.jsx'
 const { $Api } = getCurrentInstance().appContext.config.globalProperties
 // import { ElMessageBox } from 'element-plus'
 
+// 表单配置
 const formRef = ref(null)
 const formConfig = reactive({
   config: {
@@ -46,11 +56,24 @@ const formConfig = reactive({
     postCode: ''
   },
   item: [
-    { prop: 'postName', label: '岗位名称', itemRender: { name: 'ElInput', clearable: true } },
-    { prop: 'postCode', label: '岗位编码', itemRender: { name: 'ElInput' } }
+    { prop: 'postName', label: '', itemRender: { placeholder: '岗位名称', name: 'ElInput', clearable: true } },
+    { prop: 'postCode', label: '', itemRender: { placeholder: '岗位编码', name: 'ElInput' } },
+    {
+      prop: 'status',
+      label: '',
+      itemRender: {
+        placeholder: '状态',
+        name: 'ElSelect',
+        options: [
+          { label: '正常', value: '0' },
+          { label: '停用', value: '1' }
+        ]
+      }
+    }
   ]
 })
 
+// 表格配置
 const tableRef = ref(null)
 const tableConfig = reactive({
   // 分页配置
@@ -100,9 +123,25 @@ const queryHandle = () => {
 }
 // 重置
 const resetHandle = () => {
+  // 重置表单
   formRef.value.reset()
+  // 重新加载表格
   tableRef.value.reload(true)
 }
+
+// 弹窗配置
+const dialogConfig = reactive({
+  show: false,
+  config: {
+    title: '新增',
+    width: '500',
+    draggable: true,
+    // fullscreen: true,
+    onClose: () => {
+      dialogConfig.show = false
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped></style>

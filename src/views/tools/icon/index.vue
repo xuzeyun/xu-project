@@ -13,7 +13,7 @@
     <el-row class="icon-wrap">
       <el-card class="icon-card" v-for="(item, index) in modules" :key="index" >
         <font-awesome-icon class="icon" :icon="item.iconName" />
-        <p class="g-ellipsis">{{ item.iconName }}</p>
+        <p class="g-ellipsis" :title="item.iconName">{{ item.iconName }}</p>
       </el-card>
     </el-row>
   </div>

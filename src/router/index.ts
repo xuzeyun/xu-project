@@ -66,7 +66,19 @@ const router = createRouter({
               name: 'icons',
               component: () => import('@/views/tools/icon/index.vue'),
               meta: { title: 'Fas图标库', icon: '', allPath: '/tools/icons' }
-            }
+            },
+            {
+              path: 'form',
+              name: 'form',
+              component: () => import('@/views/tools/form/index.vue'),
+              meta: { title: '表单组件示例', icon: '', allPath: '/tools/form' }
+            },
+            {
+              path: 'table',
+              name: 'table',
+              component: () => import('@/views/tools/table/index.vue'),
+              meta: { title: '表格组件示例', icon: '', allPath: '/tools/table' }
+            },
           ]
         }
       ]
