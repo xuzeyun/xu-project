@@ -19,13 +19,22 @@
     </el-col>
     <el-col class="g-btns">
       <el-button size="small" type="primary" @click="dialogConfig.show = true"><font-awesome-icon class="icon" icon="add" />新增</el-button>
-      <el-button size="small" type="success" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="edit" />修改</el-button>
+      <!-- <el-button size="small" type="success" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="edit" />修改</el-button> -->
       <el-button size="small" type="danger" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="trash" />删除</el-button>
       <el-button size="small" type="warning" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="file-export" />导出</el-button>
     </el-col>
   </el-row>
   <!-- 表格组件 -->
-  <BaseTable ref="tableRef" v-bind="tableConfig"></BaseTable>
+  <BaseTable ref="tableRef" v-bind="tableConfig">
+    <template #operation>
+      <el-button size="small" type="primary">
+        <font-awesome-icon class="icon" icon="edit" />
+      </el-button>
+      <el-button size="small" type="danger">
+        <font-awesome-icon class="icon" icon="trash" />
+      </el-button>
+    </template>
+  </BaseTable>
 
   <!-- 弹窗组件 -->
   <BaseDialog v-bind="dialogConfig">
@@ -69,7 +78,7 @@ const formConfig = reactive({
           { label: '停用', value: '1' }
         ]
       }
-    },
+    }
   ]
 })
 
@@ -80,15 +89,15 @@ const tableConfig = reactive({
   page: {
     show: true,
     page: 1,
-    limit: 10,
+    limit: 2,
     total: 0,
-    sizes: [10, 20]
+    sizes: [2, 20]
   },
   // 表格配置
   config: {
     border: true,
     stripe: true,
-    size: '',
+    size: 'small',
     tableLayout: 'auto'
     // data: []
   },
@@ -96,15 +105,15 @@ const tableConfig = reactive({
   getTableData: async (page, limit, sortObj, queryObj) => {
     const params = {
       _page: page,
-      _limit: limit,
+      _per_page: limit,
       ...sortObj,
       ...queryObj
     }
     console.log(params, 'params')
     let res = await $Api.get('/api/getPostList', params)
     return {
-      list: res,
-      total: 16
+      list: res.data,
+      total: res.items
     }
   },
   // 表格列配置
@@ -113,7 +122,9 @@ const tableConfig = reactive({
     { label: '岗位编码', prop: 'postCode' },
     { label: '排序', prop: 'postSort' },
     { label: '状态', prop: 'status' },
-    { label: '创建时间', prop: 'createTime' }
+    { label: '创建时间', prop: 'createTime' },
+    { label: '备注', prop: 'bz' },
+    { label: '操作', prop: 'operation', fixed: 'right', width: '160', align: 'center' }
   ]
 })
 
@@ -170,6 +181,7 @@ const addFormConfig = reactive({
   },
   item: [
     { prop: 'postName', label: '岗位名称', span: 12, itemRender: { placeholder: '岗位名称', name: 'ElInput', clearable: true } },
+    { prop: 'postCode', label: '岗位编码', span: 12, itemRender: { placeholder: '岗位编码', name: 'ElInput', clearable: true } },
     { prop: 'postSort', label: '岗位排序', span: 12, itemRender: { placeholder: '岗位编码', name: 'ElInputNumber', min: 1, max: 10 } },
     {
       prop: 'status',
@@ -184,18 +196,21 @@ const addFormConfig = reactive({
         ]
       }
     },
-    { prop: 'bz', label: '备注', span: 24, itemRender: { placeholder: '备注', type: "textarea", name: 'ElInput' } },
+    { prop: 'bz', label: '备注', span: 24, itemRender: { placeholder: '备注', type: 'textarea', name: 'ElInput' } }
   ]
 })
 
 const addSubmit = async () => {
   let flag = await addFormRef.value.submit()
 
-  if(!flag) return
-  let data = addFormRef.value.formData;
+  if (!flag) return
+  let data = addFormRef.value.formData
   let res = await $Api.post('/api/getPostList', data)
-}
+  dialogConfig.show = false
 
+  // 重新加载表格
+  tableRef.value.reload(true)
+}
 </script>
 
 <style lang="scss" scoped></style>

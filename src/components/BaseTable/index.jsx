@@ -47,7 +47,7 @@ const BaseTable = defineComponent({
       // 赋值
       tableData.value = list
       pageObj.total = total || 0
-      console.log(tableData.value);
+      console.log(tableData.value)
     }
 
     // 重新加载数据
@@ -78,7 +78,11 @@ const BaseTable = defineComponent({
             {/* 判断 如果有列配置 循环列 */}
             {this.attrs.columns && this.attrs.columns.length > 0
               ? this.attrs.columns.map(item => {
-                  return <ElTableColumn {...item} key={item.prop}></ElTableColumn>
+                  return (
+                    <ElTableColumn {...item} key={item.prop}>
+                      {this.$slots[item.prop]?.()}
+                    </ElTableColumn>
+                  )
                 })
               : '请配置列'}
           </ElTable>

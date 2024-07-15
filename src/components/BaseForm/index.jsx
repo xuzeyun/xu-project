@@ -66,10 +66,12 @@ const BaseForm = defineComponent({
                   console.error(`未找到组件: ${item.itemRender.name}`)
                   return null
                 }
-                return (
-                  <ElCol span={item.span}>
+                return this.attrs.config.inline ? getFormItem(this.formData) : <ElCol span={item.span}>{getFormItem(this.formData)}</ElCol>
+
+                function getFormItem(formData) {
+                  return (
                     <ElFormItem {...item}>
-                      <Component {...item.itemRender} vModel={this.formData[item.prop]}>
+                      <Component {...item.itemRender} vModel={formData[item.prop]}>
                         {item.itemRender.name === 'ElSelect'
                           ? // select
                             item.itemRender.options.map(optionItem => {
@@ -82,8 +84,8 @@ const BaseForm = defineComponent({
                           : null}
                       </Component>
                     </ElFormItem>
-                  </ElCol>
-                )
+                  )
+                }
               })
             : '请配置表单'}
           <ElFormItem>

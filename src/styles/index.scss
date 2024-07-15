@@ -74,10 +74,12 @@ code {
   .g-forms {
     padding: 10px;
     background-color: var(--el-color-primary-light-9);
-
     .el-form {
       .el-form-item {
         margin-bottom: 0;
+      }
+      .el-row {
+        padding: 0 10px;
       }
     }
   }
@@ -139,5 +141,29 @@ code {
       color: #fff;
       background-color: var(--el-color-danger);
     }
+  }
+}
+
+.g-color-priamry {
+  color: var(--el-color-primary);
+}
+.g-color-success {
+  color: var(--el-color-success);
+}
+.g-color-danger {
+  color: var(--el-color-danger);
+}
+.g-color-warning {
+  color: var(--el-color-warning);
+}
+.g-color-info {
+  color: var(--el-color-info);
+}
+
+.el-table-fixed-column--right {
+  .icon {
+    // margin: 0 5px;
+    cursor: pointer;
+    margin: 0;
   }
 }
