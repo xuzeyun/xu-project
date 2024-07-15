@@ -26,9 +26,14 @@
   </el-row>
   <!-- 表格组件 -->
   <BaseTable ref="tableRef" v-bind="tableConfig"></BaseTable>
+
+  <!-- 弹窗组件 -->
   <BaseDialog v-bind="dialogConfig">
+    <!-- 表单组件 -->
+    <BaseForm ref="addFormRef" v-bind="addFormConfig"> </BaseForm>
+
     <template #footer>
-      <el-button type="primary">确认</el-button>
+      <el-button type="primary" @click="addSubmit">确认</el-button>
       <el-button @click="dialogConfig.show = false">取消</el-button>
     </template>
   </BaseDialog>
@@ -64,7 +69,7 @@ const formConfig = reactive({
           { label: '停用', value: '1' }
         ]
       }
-    }
+    },
   ]
 })
 
@@ -129,7 +134,7 @@ const dialogConfig = reactive({
   show: false,
   config: {
     title: '新增',
-    width: '500',
+    width: '600',
     draggable: true,
     // fullscreen: true,
     onClose: () => {
@@ -137,6 +142,60 @@ const dialogConfig = reactive({
     }
   }
 })
+
+// 新增窗口
+const addFormRef = ref(null)
+const addFormConfig = reactive({
+  config: {
+    size: '',
+    labelWidth: 80,
+    inline: false,
+    rules: {
+      postName: [
+        { required: true, message: '请输入岗位名称', trigger: 'blur' },
+        { min: 2, max: 10, message: '2~10个字符', trigger: 'blur' }
+      ],
+      postCode: [
+        { required: true, message: '请输入岗位编码', trigger: 'blur' },
+        { min: 2, max: 20, message: '2~20个字符', trigger: 'blur' }
+      ]
+    }
+  },
+  data: {
+    postName: '',
+    postCode: '',
+    postSort: 1,
+    status: '0',
+    bz: ''
+  },
+  item: [
+    { prop: 'postName', label: '岗位名称', span: 12, itemRender: { placeholder: '岗位名称', name: 'ElInput', clearable: true } },
+    { prop: 'postSort', label: '岗位排序', span: 12, itemRender: { placeholder: '岗位编码', name: 'ElInputNumber', min: 1, max: 10 } },
+    {
+      prop: 'status',
+      label: '状态',
+      span: 12,
+      itemRender: {
+        placeholder: '状态',
+        name: 'ElSelect',
+        options: [
+          { label: '正常', value: '0' },
+          { label: '停用', value: '1' }
+        ]
+      }
+    },
+    { prop: 'bz', label: '备注', span: 24, itemRender: { placeholder: '备注', type: "textarea", name: 'ElInput' } },
+  ]
+})
+
+const addSubmit = async () => {
+  let flag = await addFormRef.value.submit()
+
+  if(!flag) return
+  let data = addFormRef.value.formData;
+  let res = await $Api.post('/api/getPostList', data)
+}
+
 </script>
 
 <style lang="scss" scoped></style>

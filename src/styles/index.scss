@@ -84,14 +84,15 @@ code {
   .g-btns {
     padding: 6px 10px;
     border-top: 1px solid var(--el-color-primary-light-7);
-    p {
-      padding: 0;
-      margin: 0;
-      font-size: 14px;
-      b {
-        color: var(--el-color-primary);
-      }
-    }
+  }
+}
+
+// 统计文字加数字
+.g-text-number {
+  font-size: 14px;
+  margin-right: 20px;
+  b {
+    color: var(--el-color-primary);
   }
 }
 

@@ -7,9 +7,7 @@
     { id: '1', text: 'a comment about post 1', postId: '1' },
     { id: '2', text: 'another comment about post 1', postId: '1' }
   ],
-  profile: {
-    name: 'typicode'
-  },
+  profile: { name: 'typicode' },
   login: {
     code: 200,
     msg: '登录成功',
@@ -22,7 +20,29 @@
     code: 200,
     msg: '操作成功',
     permissions: [],
-    roles: ['admin'],
+    roles: [
+      {
+        createBy: null,
+        createTime: null,
+        updateBy: null,
+        updateTime: null,
+        remark: null,
+        roleId: 1,
+        roleName: '超级管理员',
+        roleKey: 'admin',
+        roleSort: 1,
+        dataScope: '1',
+        menuCheckStrictly: false,
+        deptCheckStrictly: false,
+        status: '0',
+        delFlag: null,
+        flag: false,
+        menuIds: null,
+        deptIds: null,
+        permissions: null,
+        admin: true
+      }
+    ],
     createBy: 'admin',
     createTime: '2024-06-30 11:27:11',
     updateBy: null,
@@ -60,29 +80,6 @@
       parentName: null,
       children: []
     },
-    roles: [
-      {
-        createBy: null,
-        createTime: null,
-        updateBy: null,
-        updateTime: null,
-        remark: null,
-        roleId: 1,
-        roleName: '超级管理员',
-        roleKey: 'admin',
-        roleSort: 1,
-        dataScope: '1',
-        menuCheckStrictly: false,
-        deptCheckStrictly: false,
-        status: '0',
-        delFlag: null,
-        flag: false,
-        menuIds: null,
-        deptIds: null,
-        permissions: null,
-        admin: true
-      }
-    ],
     roleIds: null,
     postIds: null,
     roleId: null,
@@ -97,49 +94,11 @@
         redirect: 'noRedirect',
         component: 'Layout',
         alwaysShow: true,
-        meta: {
-          title: '系统工具',
-          icon: 'tool',
-          noCache: false,
-          link: null
-        },
+        meta: { title: '系统工具', icon: 'tool', noCache: false, link: null },
         children: [
-          {
-            name: 'Build',
-            path: 'build',
-            hidden: false,
-            component: 'tool/build/index',
-            meta: {
-              title: '表单构建',
-              icon: 'build',
-              noCache: false,
-              link: null
-            }
-          },
-          {
-            name: 'Gen',
-            path: 'gen',
-            hidden: false,
-            component: 'tool/gen/index',
-            meta: {
-              title: '代码生成',
-              icon: 'code',
-              noCache: false,
-              link: null
-            }
-          },
-          {
-            name: 'Swagger',
-            path: 'swagger',
-            hidden: false,
-            component: 'tool/swagger/index',
-            meta: {
-              title: '系统接口',
-              icon: 'swagger',
-              noCache: false,
-              link: null
-            }
-          }
+          { name: 'Build', path: 'build', hidden: false, component: 'tool/build/index', meta: { title: '表单构建', icon: 'build', noCache: false, link: null } },
+          { name: 'Gen', path: 'gen', hidden: false, component: 'tool/gen/index', meta: { title: '代码生成', icon: 'code', noCache: false, link: null } },
+          { name: 'Swagger', path: 'swagger', hidden: false, component: 'tool/swagger/index', meta: { title: '系统接口', icon: 'swagger', noCache: false, link: null } }
         ]
       }
     ]
@@ -156,7 +115,8 @@
       postName: '董事长',
       postSort: 1,
       status: '0',
-      flag: false
+      flag: false,
+      id: '8f94'
     },
     {
       createBy: 'admin',
@@ -169,7 +129,8 @@
       postName: '项目经理',
       postSort: 2,
       status: '0',
-      flag: false
+      flag: false,
+      id: '8011'
     },
     {
       createBy: 'admin',
@@ -182,7 +143,8 @@
       postName: '人力资源',
       postSort: 3,
       status: '0',
-      flag: false
+      flag: false,
+      id: '2f63'
     },
     {
       createBy: 'admin',
@@ -195,9 +157,9 @@
       postName: '普通员工',
       postSort: 4,
       status: '0',
-      flag: false
+      flag: false,
+      id: '4faf'
     },
-
     {
       createBy: 'admin',
       createTime: '2024-06-30 11:27:12',
@@ -209,7 +171,8 @@
       postName: '董事长',
       postSort: 1,
       status: '0',
-      flag: false
+      flag: false,
+      id: '80ae'
     },
     {
       createBy: 'admin',
@@ -222,7 +185,8 @@
       postName: '项目经理',
       postSort: 2,
       status: '0',
-      flag: false
+      flag: false,
+      id: '8598'
     },
     {
       createBy: 'admin',
@@ -235,7 +199,8 @@
       postName: '人力资源',
       postSort: 3,
       status: '0',
-      flag: false
+      flag: false,
+      id: 'c970'
     },
     {
       createBy: 'admin',
@@ -248,9 +213,9 @@
       postName: '普通员工',
       postSort: 4,
       status: '0',
-      flag: false
+      flag: false,
+      id: '2853'
     },
-
     {
       createBy: 'admin',
       createTime: '2024-06-30 11:27:12',
@@ -262,7 +227,8 @@
       postName: '董事长',
       postSort: 1,
       status: '0',
-      flag: false
+      flag: false,
+      id: '923c'
     },
     {
       createBy: 'admin',
@@ -275,7 +241,8 @@
       postName: '项目经理',
       postSort: 2,
       status: '0',
-      flag: false
+      flag: false,
+      id: '8cb6'
     },
     {
       createBy: 'admin',
@@ -288,7 +255,8 @@
       postName: '人力资源',
       postSort: 3,
       status: '0',
-      flag: false
+      flag: false,
+      id: '8ada'
     },
     {
       createBy: 'admin',
@@ -301,9 +269,9 @@
       postName: '普通员工',
       postSort: 4,
       status: '0',
-      flag: false
+      flag: false,
+      id: '381e'
     },
-    
     {
       createBy: 'admin',
       createTime: '2024-06-30 11:27:12',
@@ -315,7 +283,8 @@
       postName: '董事长',
       postSort: 1,
       status: '0',
-      flag: false
+      flag: false,
+      id: '4d1b'
     },
     {
       createBy: 'admin',
@@ -328,7 +297,8 @@
       postName: '项目经理',
       postSort: 2,
       status: '0',
-      flag: false
+      flag: false,
+      id: '1930'
     },
     {
       createBy: 'admin',
@@ -341,7 +311,8 @@
       postName: '人力资源',
       postSort: 3,
       status: '0',
-      flag: false
+      flag: false,
+      id: '4013'
     },
     {
       createBy: 'admin',
@@ -354,7 +325,9 @@
       postName: '普通员工',
       postSort: 4,
       status: '0',
-      flag: false
-    }
+      flag: false,
+      id: 'b799'
+    },
+    { id: 'febb', postName: '许泽云', postCode: 'xzy', postSort: 1, status: '0' }
   ]
 }

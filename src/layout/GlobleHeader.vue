@@ -9,6 +9,11 @@
       <el-icon v-if="isDark"><Moon /></el-icon>
       <el-icon v-else><Sunny /></el-icon>
     </div>
+    <!-- <el-button-group class="ml-4">
+      <el-button size="small" @click="changeSize('大')">大</el-button>
+      <el-button size="small" @click="changeSize('中')">中</el-button>
+      <el-button size="small" @click="changeSize('小')">小</el-button>
+    </el-button-group> -->
   </div>
 </template>
 
@@ -16,6 +21,11 @@
 import { ref, reactive, onMounted } from 'vue'
 import { toggleDark, isDark } from '@/composables'
 import { Sunny, Moon } from '@element-plus/icons-vue'
+
+const changeSize = (flag) => {
+
+}
+
 
 onMounted(() => {})
 </script>

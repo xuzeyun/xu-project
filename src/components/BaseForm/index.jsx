@@ -1,5 +1,5 @@
-import { ref, reactive, defineComponent } from 'vue'
-import { ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption } from 'element-plus'
+import { ref, reactive, defineComponent, onMounted } from 'vue'
+import { ElRow, ElCol, ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption, ElInputNumber } from 'element-plus'
 
 const BaseForm = defineComponent({
   // props: {
@@ -10,13 +10,15 @@ const BaseForm = defineComponent({
     const tabs = {
       ElInput,
       ElButton,
-      ElSelect
+      ElSelect,
+      ElInputNumber
     }
 
     const formRef = ref(null)
     // 表单动态数据
-    const formData = reactive({})
-    formData.value = { ...attrs.data }
+    const formData = reactive({ ...attrs.data })
+    // formData.value = { ...attrs.data }
+    // console.log(attrs.data, formData.value,'---');
 
     // 表单重置
     const reset = () => {
@@ -29,11 +31,14 @@ const BaseForm = defineComponent({
 
     // 表单提交
     const submit = () => {
-      submitHandle(formRef.value)
+      return submitHandle(formRef.value)
     }
-    const submitHandle = formEl => {
+    const submitHandle = async formEl => {
       if (!formEl) return
-      formEl.resetFields()
+      let data = await formEl.validate((valid, fields) => {
+        return valid
+      })
+      return data
     }
 
     return {
@@ -52,35 +57,39 @@ const BaseForm = defineComponent({
     }
     return (
       <ElForm ref="formRef" {...this.attrs.config} model={this.formData}>
-        {this.attrs.item && this.attrs.item.length > 0
-          ? this.attrs.item.map(item => {
-              // 确保 this.tabs[item.itemRender.name] 是一个有效的组件
-              const Component = this.tabs[item.itemRender.name]
-              if (!Component) {
-                console.error(`未找到组件: ${item.itemRender.name}`)
-                return null
-              }
-              return (
-                <ElFormItem {...item}>
-                  <Component {...item.itemRender} vModel={this.formData[item.prop]}>
-                    {item.itemRender.name === 'ElSelect'
-                      ? // select
-                        item.itemRender.options.map(optionItem => {
-                          return (
-                            <ElOption {...optionItem} key={optionItem.value}>
-                              {optionItem.label}
-                            </ElOption>
-                          )
-                        })
-                      : null}
-                  </Component>
-                </ElFormItem>
-              )
-            })
-          : '请配置表单'}
-        <ElFormItem>
-          <ElButtonGroup>{this.$slots.btns?.()}</ElButtonGroup>
-        </ElFormItem>
+        <ElRow gutter={20}>
+          {this.attrs.item && this.attrs.item.length > 0
+            ? this.attrs.item.map(item => {
+                // 确保 this.tabs[item.itemRender.name] 是一个有效的组件
+                const Component = this.tabs[item.itemRender.name]
+                if (!Component) {
+                  console.error(`未找到组件: ${item.itemRender.name}`)
+                  return null
+                }
+                return (
+                  <ElCol span={item.span}>
+                    <ElFormItem {...item}>
+                      <Component {...item.itemRender} vModel={this.formData[item.prop]}>
+                        {item.itemRender.name === 'ElSelect'
+                          ? // select
+                            item.itemRender.options.map(optionItem => {
+                              return (
+                                <ElOption {...optionItem} key={optionItem.value}>
+                                  {optionItem.label}
+                                </ElOption>
+                              )
+                            })
+                          : null}
+                      </Component>
+                    </ElFormItem>
+                  </ElCol>
+                )
+              })
+            : '请配置表单'}
+          <ElFormItem>
+            <ElButtonGroup>{this.$slots.btns?.()}</ElButtonGroup>
+          </ElFormItem>
+        </ElRow>
       </ElForm>
     )
   }

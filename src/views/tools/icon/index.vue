@@ -10,17 +10,28 @@
       </BaseForm>
     </el-col>
     <el-col class="g-btns">
-      <p>
+      <span class="g-text-number">
         图标总数：<b>{{ modules.length }}</b>
-      </p>
+      </span>
+      <span class="g-text-number"
+        >当前展示数：<b>{{ initList.length }}</b></span
+      >
+      <el-switch
+        v-model="isShowName"
+        inline-prompt
+        active-text="是"
+        inactive-text="否"
+        style="margin-right: 10px;"
+      />
+      <span class="g-text-number">是否显示图标名称</span>
     </el-col>
   </el-row>
   <el-row class="icon-wrap">
-    <el-card class="icon-card" v-for="(item, index) in initList" :key="index">
-      <div>
+    <el-card class="icon-card" shadow="hover" v-for="(item, index) in initList" :key="index">
+      <div class="icon-box">
         <font-awesome-icon class="icon" :icon="item.iconName" />
       </div>
-      <p :title="item.iconName">
+      <p v-if="isShowName" :title="item.iconName">
         <span>{{ item.iconName }}</span>
       </p>
     </el-card>
@@ -33,18 +44,19 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 const modules = ref([])
 const initList = ref([])
+const isShowName = ref(false)
 
 onMounted(() => {
   for (let [key, item] of Object.entries(fas)) {
     if (modules.value.length === 0) {
-      console.log(item.iconName)
+      // console.log(item.iconName)
       modules.value.push({
         key,
         prefix: item.prefix,
         iconName: item.iconName
       })
     } else if (modules.value.length > 0) {
-      console.log(modules.value)
+      // console.log(modules.value)
       if (item.iconName != modules.value[modules.value.length - 1].iconName) {
         modules.value.push({
           key,
@@ -72,9 +84,14 @@ const formConfig = reactive({
 
 // 提交
 const queryHandle = () => {
-  console.log(formConfig.data.name, 'formConfig.data.name')
+  if (!formRef.value.formData.name) {
+    initList.value = [...modules.value]
+    return
+  }
+
+  initList.value = []
   let arr = modules.value.filter(item => {
-    return item.iconName == formConfig.data.name
+    return item.iconName.indexOf(formRef.value.formData.name) != -1
   })
   initList.value = arr
 }
@@ -82,6 +99,7 @@ const queryHandle = () => {
 const resetHandle = () => {
   // 重置表单
   formRef.value.reset()
+  queryHandle()
   // 重新加载表格
   // tableRef.value.reload(true)
 }
@@ -91,20 +109,36 @@ const resetHandle = () => {
 .icon-wrap {
   display: flex;
   gap: 15px;
-  .icon {
-    font-size: 28px;
-    margin-bottom: 10px;
+  .icon-card {
+    // width: 70px;
+    .icon-box {
+      display: flex;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      align-items: center;
+      .icon {
+        font-size: 28px;
+      }
+    }
+    p {
+      display: flex;
+      height: 40px;
+      align-items: center;
+      margin: 0;
+      font-size: 12px;
+      line-height: 14px;
+      color: var(--el-text-color-placeholder)
+    }
   }
 }
-.icon-card {
-  width: 150px;
-  p {
+
+::v-deep(.el-card) {
+  .el-card__body {
     display: flex;
-    height: 28px;
-    align-items: center;
-    margin: 0;
-    font-size: 12px;
-    line-height: 14px;
+    flex-direction: row;
+    gap: 10px;
+    padding: 15px;
   }
 }
 </style>
