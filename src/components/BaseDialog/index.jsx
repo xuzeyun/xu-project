@@ -16,7 +16,9 @@ const BaseTable = defineComponent({
       } || {}
     )
 
-    onMounted(() => {})
+    onMounted(() => {
+      console.log(attrs.config.title);
+    })
 
     watch(
       () => attrs.show,

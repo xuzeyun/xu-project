@@ -69,18 +69,21 @@ const BaseTable = defineComponent({
     }
   },
   render() {
+    
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <ElRow>
           {/* 表格 */}
           <ElTable {...this.attrs.config} data={this.tableData}>
-            <ElTableColumn label="#" type="index" width="50"></ElTableColumn>
+            <ElTableColumn label="#" type="index" align="center" width="60"></ElTableColumn>
             {/* 判断 如果有列配置 循环列 */}
             {this.attrs.columns && this.attrs.columns.length > 0
               ? this.attrs.columns.map(item => {
                   return (
                     <ElTableColumn {...item} key={item.prop}>
-                      {this.$slots[item.prop]?.()}
+                      {{
+                        default: (scope) => this.$slots[item.prop]?.(scope)
+                      }}
                     </ElTableColumn>
                   )
                 })

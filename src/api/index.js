@@ -17,3 +17,30 @@ export function post(url, data) {
     data
   })
 }
+
+// delete
+export function deleteById(url, id, data) {
+  return request({
+    url: `${url}/${id}`,
+    method: 'delete',
+    data
+  })
+}
+
+// put
+export function putById(url, id, data) {
+  return request({
+    url: `${url}/${id}`,
+    method: 'put',
+    data
+  })
+}
+
+// patch
+export function patchById(url, id, data) {
+  return request({
+    url: `${url}/${id}`,
+    method: 'patch',
+    data
+  })
+}

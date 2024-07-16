@@ -18,40 +18,45 @@
       </BaseForm>
     </el-col>
     <el-col class="g-btns">
-      <el-button size="small" type="primary" @click="dialogConfig.show = true"><font-awesome-icon class="icon" icon="add" />新增</el-button>
-      <!-- <el-button size="small" type="success" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="edit" />修改</el-button> -->
+      <el-button size="small" type="primary" @click="addHandle"><font-awesome-icon class="icon" icon="add" />新增</el-button>
       <el-button size="small" type="danger" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="trash" />删除</el-button>
       <el-button size="small" type="warning" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="file-export" />导出</el-button>
     </el-col>
   </el-row>
   <!-- 表格组件 -->
   <BaseTable ref="tableRef" v-bind="tableConfig">
-    <template #operation>
-      <el-button size="small" type="primary">
+    <template #operation="scope">
+      <el-button size="small" type="primary" @click="editHandle(scope.row, scope.$index)">
         <font-awesome-icon class="icon" icon="edit" />
       </el-button>
-      <el-button size="small" type="danger">
+      <el-button size="small" type="danger" @click="deleteHandle(scope.row, scope.$index)">
         <font-awesome-icon class="icon" icon="trash" />
       </el-button>
     </template>
   </BaseTable>
 
   <!-- 弹窗组件 -->
-  <BaseDialog v-bind="dialogConfig">
+  <BaseDialog ref="dialogRef" v-bind="dialogConfig">
     <!-- 表单组件 -->
     <BaseForm ref="addFormRef" v-bind="addFormConfig"> </BaseForm>
 
     <template #footer>
-      <el-button type="primary" @click="addSubmit">确认</el-button>
+      <el-button type="primary" @click="curSaveType === 1 ? addSubmit() : editSubmit()">确认</el-button>
       <el-button @click="dialogConfig.show = false">取消</el-button>
     </template>
   </BaseDialog>
 </template>
 
 <script setup>
-import { reactive, ref, getCurrentInstance, onMounted } from 'vue'
+import { reactive, ref, getCurrentInstance, onMounted, nextTick } from 'vue'
 const { $Api } = getCurrentInstance().appContext.config.globalProperties
-// import { ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { format } from 'date-fns'
+
+// 当前保存类型（1新增2修改3查看）
+const curSaveType = ref(1)
+// 按钮通用loading
+const loading = ref(false)
 
 // 表单配置
 const formRef = ref(null)
@@ -89,15 +94,15 @@ const tableConfig = reactive({
   page: {
     show: true,
     page: 1,
-    limit: 2,
+    limit: 10,
     total: 0,
-    sizes: [2, 20]
+    sizes: [10, 20]
   },
   // 表格配置
   config: {
     border: true,
     stripe: true,
-    size: 'small',
+    size: '',
     tableLayout: 'auto'
     // data: []
   },
@@ -123,7 +128,7 @@ const tableConfig = reactive({
     { label: '排序', prop: 'postSort' },
     { label: '状态', prop: 'status' },
     { label: '创建时间', prop: 'createTime' },
-    { label: '备注', prop: 'bz' },
+    { label: '备注', prop: 'remark' },
     { label: '操作', prop: 'operation', fixed: 'right', width: '160', align: 'center' }
   ]
 })
@@ -141,12 +146,14 @@ const resetHandle = () => {
 }
 
 // 弹窗配置
+const dialogRef = ref(null)
 const dialogConfig = reactive({
   show: false,
   config: {
     title: '新增',
     width: '600',
     draggable: true,
+    destroyOnClose: true,
     // fullscreen: true,
     onClose: () => {
       dialogConfig.show = false
@@ -154,7 +161,7 @@ const dialogConfig = reactive({
   }
 })
 
-// 新增窗口
+// 新增表单
 const addFormRef = ref(null)
 const addFormConfig = reactive({
   config: {
@@ -177,7 +184,7 @@ const addFormConfig = reactive({
     postCode: '',
     postSort: 1,
     status: '0',
-    bz: ''
+    remark: ''
   },
   item: [
     { prop: 'postName', label: '岗位名称', span: 12, itemRender: { placeholder: '岗位名称', name: 'ElInput', clearable: true } },
@@ -196,20 +203,93 @@ const addFormConfig = reactive({
         ]
       }
     },
-    { prop: 'bz', label: '备注', span: 24, itemRender: { placeholder: '备注', type: 'textarea', name: 'ElInput' } }
+    { prop: 'remark', label: '备注', span: 24, itemRender: { placeholder: '备注', type: 'textarea', name: 'ElInput' } }
   ]
 })
 
+// 新增
+const addHandle = () => {
+  curSaveType.value = 1
+  // 新增数据初始化
+  dialogRef.value.config.title = '新增'
+  dialogConfig.show = true
+}
 const addSubmit = async () => {
   let flag = await addFormRef.value.submit()
 
   if (!flag) return
   let data = addFormRef.value.formData
-  let res = await $Api.post('/api/getPostList', data)
+  let res = await $Api.post('/api/getPostList', {
+    createTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+    ...data
+  })
+  if (res && res.id) {
+    ElMessage.success('操作成功')
+  } else {
+    ElMessage.danger('操作失败')
+  }
   dialogConfig.show = false
 
-  // 重新加载表格
+  // 重新加载表格（新增因为增加了数据所以重新加载比较合理）
   tableRef.value.reload(true)
+}
+
+// 修改
+const curEditIndex = ref(0)
+const editHandle = (row, index) => {
+  curEditIndex.value = index
+  curSaveType.value = 2
+  // 修改数据初始化
+  // addFormConfig.data = { ...row }
+  dialogConfig.show = true
+  dialogRef.value.config.title = '修改'
+
+  nextTick(() => {
+    addFormRef.value.formData.id = row.id
+    Object.keys(addFormRef.value.formData).forEach(key => {
+      addFormRef.value.formData[key] = row[key]
+    })
+  })
+}
+const editSubmit = async () => {
+  // 表单验证
+  let flag = await addFormRef.value.submit()
+  if (!flag) return
+  let data = addFormRef.value.formData
+  let res = await $Api.patchById('/api/getPostList', data.id, {
+    ...data
+  })
+  if (res && res.id) {
+    tableRef.value.tableData[curEditIndex.value] = { ...data }
+    ElMessage.success('操作成功')
+  } else {
+    ElMessage.danger('操作失败')
+  }
+  dialogConfig.show = false
+}
+
+// 删除
+const deleteHandle = async (row, index) => {
+  await ElMessageBox.confirm('删除该条目。是否确认?', '警告', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(async () => {
+      let res = await $Api.deleteById('/api/getPostList', row.id)
+      if (res && res.id) {
+        tableRef.value.tableData.splice(index, 1)
+        ElMessage.success('操作成功')
+      } else {
+        ElMessage.danger('操作失败')
+      }
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: '已取消'
+      })
+    })
 }
 </script>
 
