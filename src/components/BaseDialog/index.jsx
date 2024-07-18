@@ -45,7 +45,7 @@ const BaseTable = defineComponent({
   },
   render() {
     return (
-      <ElDialog vModel={this.show} {...this.config} showClose={false}>
+      <ElDialog class="g-dialog" vModel={this.show} {...this.config} showClose={false}>
         {{
           default: () => <div>{this.$slots.default?.()}</div>,
           header: () => (

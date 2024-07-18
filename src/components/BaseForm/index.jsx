@@ -40,7 +40,6 @@ const BaseForm = defineComponent({
       })
       return data
     }
-
     return {
       attrs,
       formRef,

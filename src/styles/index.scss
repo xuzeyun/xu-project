@@ -98,12 +98,34 @@ code {
   }
 }
 
-.el-dialog {
-  padding: 0;
+// base-dialog弹窗组件定义的样式
+.g-dialog {
+  padding: 0 !important;
   .el-dialog__header {
     padding: 0;
     border-bottom: 1px solid var(--el-border-color);
     padding-left: 15px;
+    // 自定义头部
+    .g-dialog-header {
+      display: flex;
+      height: 40px;
+      h3 {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+      }
+      a {
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover {
+          color: #fff;
+          background-color: var(--el-color-danger);
+        }
+      }
+    }
   }
   .el-dialog__body {
     padding: 15px;
@@ -123,26 +145,8 @@ code {
   }
 }
 
-.g-dialog-header {
-  display: flex;
-  height: 40px;
-  h3 {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-  }
-  a {
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &:hover {
-      color: #fff;
-      background-color: var(--el-color-danger);
-    }
-  }
-}
+
+
 
 .g-color-priamry {
   color: var(--el-color-primary);

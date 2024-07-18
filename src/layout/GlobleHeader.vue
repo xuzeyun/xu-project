@@ -5,9 +5,20 @@
       <h1>融通仓储管理系统</h1>
       <span class="version">[ V1.0.0 ]</span>
     </div>
+    
+    <div class="header-li">
+      <el-icon v-if="fullscreen"><font-awesome-icon icon="compress" /></el-icon>
+      <el-icon v-else><font-awesome-icon icon="expand" /></el-icon>
+    </div>
     <div class="header-li tool dark" @click="toggleDark()">
       <el-icon v-if="isDark"><Moon /></el-icon>
       <el-icon v-else><Sunny /></el-icon>
+    </div>
+    <div class="header-li">
+      <el-avatar
+        size="small"
+        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+      />
     </div>
     <!-- <el-button-group class="ml-4">
       <el-button size="small" @click="changeSize('大')">大</el-button>
@@ -26,6 +37,7 @@ const changeSize = (flag) => {
 
 }
 
+const fullscreen = ref(false)
 
 onMounted(() => {})
 </script>
@@ -35,6 +47,7 @@ onMounted(() => {})
 .header-wrap {
   height: 100%;
   display: flex;
+  gap: 10px;
   .header-li {
     height: 100%;
     display: flex;

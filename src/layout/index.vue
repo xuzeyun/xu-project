@@ -17,6 +17,14 @@
         </el-footer> -->
         <!-- mian -->
         <el-main>
+          <el-row style="margin-bottom: 10px">
+            <el-col :span="12">
+              <el-breadcrumb separator="/">
+                <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+                <el-breadcrumb-item>岗位管理</el-breadcrumb-item>
+              </el-breadcrumb>
+            </el-col>
+          </el-row>
           <router-view />
         </el-main>
       </el-container>
@@ -24,9 +32,21 @@
   </el-container>
 </template>
 <script setup lang="ts">
+import { ref, onMounted, computed } from 'vue'
 import GlobelHeader from '@/layout/GlobleHeader.vue'
 import GlobelFooter from '@/layout/GlobleFooter.vue'
 import GlobelAside from '@/layout/GlobleAside.vue'
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
+
+onMounted(() => {
+  console.log(router, route.matched, 'rou');
+  
+})
+
+
+
 </script>
 <style lang="scss" scoped>
 .app-cont {

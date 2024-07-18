@@ -1,12 +1,4 @@
 <template>
-  <el-row style="margin-bottom: 10px">
-    <el-col :span="12">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>系统管理</el-breadcrumb-item>
-        <el-breadcrumb-item>岗位管理</el-breadcrumb-item>
-      </el-breadcrumb>
-    </el-col>
-  </el-row>
   <el-row class="g-tools">
     <el-col class="g-forms">
       <!-- 表单组件 -->
@@ -25,6 +17,10 @@
   </el-row>
   <!-- 表格组件 -->
   <BaseTable ref="tableRef" v-bind="tableConfig">
+    <template #status="scope">
+      <el-tag v-if="scope.row.status === '0'" type="success">正常</el-tag>
+      <el-tag v-else-if="scope.row.status === '1'" type="danger">停用</el-tag>
+    </template>
     <template #operation="scope">
       <el-button size="small" type="primary" @click="editHandle(scope.row, scope.$index)">
         <font-awesome-icon class="icon" icon="edit" />
@@ -103,7 +99,7 @@ const tableConfig = reactive({
     border: true,
     stripe: true,
     size: '',
-    tableLayout: 'auto'
+    // tableLayout: 'auto'
     // data: []
   },
   // 请求数据
@@ -111,6 +107,7 @@ const tableConfig = reactive({
     const params = {
       _page: page,
       _per_page: limit,
+      ...formRef.value.formData,
       ...sortObj,
       ...queryObj
     }
@@ -125,9 +122,9 @@ const tableConfig = reactive({
   columns: [
     { label: '岗位名称', prop: 'postName' },
     { label: '岗位编码', prop: 'postCode' },
-    { label: '排序', prop: 'postSort' },
-    { label: '状态', prop: 'status' },
-    { label: '创建时间', prop: 'createTime' },
+    { label: '排序', prop: 'postSort', align: 'right', headerAlign: 'left' },
+    { label: '状态', prop: 'status', align: 'center', headerAlign: 'left' },
+    { label: '创建时间', prop: 'createTime', align: 'right', headerAlign: 'left' },
     { label: '备注', prop: 'remark' },
     { label: '操作', prop: 'operation', fixed: 'right', width: '160', align: 'center' }
   ]
