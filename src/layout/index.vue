@@ -20,8 +20,9 @@
           <el-row style="margin-bottom: 10px">
             <el-col :span="12">
               <el-breadcrumb separator="/">
-                <el-breadcrumb-item>系统管理</el-breadcrumb-item>
-                <el-breadcrumb-item>岗位管理</el-breadcrumb-item>
+                <template v-for="(item, index) in breadcrumbArr">
+                  <el-breadcrumb-item :key="index" v-if="item">{{ item }}</el-breadcrumb-item>
+                </template>
               </el-breadcrumb>
             </el-col>
           </el-row>
@@ -32,7 +33,7 @@
   </el-container>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watchEffect } from 'vue'
 import GlobelHeader from '@/layout/GlobleHeader.vue'
 import GlobelFooter from '@/layout/GlobleFooter.vue'
 import GlobelAside from '@/layout/GlobleAside.vue'
@@ -40,13 +41,21 @@ import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 
-onMounted(() => {
-  console.log(router, route.matched, 'rou');
-  
+const breadcrumbArr = ref([])
+
+// onMounted(() => {
+//   // console.log(router, route.matched, 'rou');
+//   route.matched.forEach(item => {
+//     breadcrumbArr.value.push(item.meta.title)
+//   })
+// })
+
+watchEffect(() => {
+  breadcrumbArr.value = []
+  route.matched.forEach(item => {
+    breadcrumbArr.value.push(item.meta.title)
+  })
 })
-
-
-
 </script>
 <style lang="scss" scoped>
 .app-cont {

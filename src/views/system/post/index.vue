@@ -181,7 +181,8 @@ const addFormConfig = reactive({
     postCode: '',
     postSort: 1,
     status: '0',
-    remark: ''
+    remark: '',
+    createTime: ''
   },
   item: [
     { prop: 'postName', label: '岗位名称', span: 12, itemRender: { placeholder: '岗位名称', name: 'ElInput', clearable: true } },
@@ -217,8 +218,8 @@ const addSubmit = async () => {
   if (!flag) return
   let data = addFormRef.value.formData
   let res = await $Api.post('/api/getPostList', {
+    ...data,
     createTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-    ...data
   })
   if (res && res.id) {
     ElMessage.success('操作成功')
@@ -253,9 +254,11 @@ const editSubmit = async () => {
   let flag = await addFormRef.value.submit()
   if (!flag) return
   let data = addFormRef.value.formData
+  if(!data.createTime) data.createTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
   let res = await $Api.patchById('/api/getPostList', data.id, {
     ...data
   })
+
   if (res && res.id) {
     tableRef.value.tableData[curEditIndex.value] = { ...data }
     ElMessage.success('操作成功')
