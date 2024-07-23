@@ -1,5 +1,5 @@
 import { ref, reactive, defineComponent, onMounted } from 'vue'
-import { ElRow, ElCol, ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption, ElInputNumber } from 'element-plus'
+import { ElRow, ElCol, ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption, ElInputNumber, ElRadioGroup, ElRadioButton, ElRadio } from 'element-plus'
 
 const BaseForm = defineComponent({
   // props: {
@@ -11,14 +11,13 @@ const BaseForm = defineComponent({
       ElInput,
       ElButton,
       ElSelect,
-      ElInputNumber
+      ElInputNumber,
+      ElRadioGroup
     }
 
     const formRef = ref(null)
     // 表单动态数据
-    const formData = reactive({ ...attrs.data })
-    // formData.value = { ...attrs.data }
-    // console.log(attrs.data, formData.value,'---');
+    const formData = reactive({...attrs.data })
 
     // 表单重置
     const reset = () => {
@@ -35,7 +34,7 @@ const BaseForm = defineComponent({
     }
     const submitHandle = async formEl => {
       if (!formEl) return
-      let data = await formEl.validate((valid, fields) => {
+      let data = await formEl.validate((valid) => {
         return valid
       })
       return data
@@ -80,7 +79,20 @@ const BaseForm = defineComponent({
                                 </ElOption>
                               )
                             })
-                          : null}
+                          : // el-radio-group
+                            item.itemRender.name === 'ElRadioGroup'
+                            ? item.itemRender.options.map(optionItem => {
+                                return item.itemRender.type === 'button' ? (
+                                  // 暂时无效
+                                  <ElRadioButton {...optionItem} key={optionItem.value}/>
+                                ) : (
+                                  <ElRadio {...optionItem} key={optionItem.value}>
+                                    {optionItem.label}
+                                  </ElRadio>
+                                )
+                              })
+                            : null}
+                        {/* ElRadioButton */}
                       </Component>
                     </ElFormItem>
                   )

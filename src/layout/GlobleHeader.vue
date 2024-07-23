@@ -5,7 +5,7 @@
       <h1>融通仓储管理系统</h1>
       <span class="version">[ V1.0.0 ]</span>
     </div>
-    
+
     <div class="header-li">
       <el-icon v-if="fullscreen"><font-awesome-icon icon="compress" /></el-icon>
       <el-icon v-else><font-awesome-icon icon="expand" /></el-icon>
@@ -15,10 +15,16 @@
       <el-icon v-else><Sunny /></el-icon>
     </div>
     <div class="header-li">
-      <el-avatar
-        size="small"
-        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-      />
+      <el-dropdown>
+        <el-avatar size="small" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item><font-awesome-icon class="g-icon" icon="user" />个人中心</el-dropdown-item>
+            <el-dropdown-item><font-awesome-icon class="g-icon" icon="broom-ball" />主题配色</el-dropdown-item>
+            <el-dropdown-item divided @click="exitHandle"><font-awesome-icon class="g-icon" icon="reply" />退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
     <!-- <el-button-group class="ml-4">
       <el-button size="small" @click="changeSize('大')">大</el-button>
@@ -33,13 +39,18 @@ import { ref, reactive, onMounted } from 'vue'
 import { toggleDark, isDark } from '@/composables'
 import { Sunny, Moon } from '@element-plus/icons-vue'
 
-const changeSize = (flag) => {
-
-}
+const changeSize = flag => {}
 
 const fullscreen = ref(false)
 
 onMounted(() => {})
+
+
+const exitHandle = () => {
+  alert()
+}
+
+
 </script>
 
 <style lang="scss" scoped>

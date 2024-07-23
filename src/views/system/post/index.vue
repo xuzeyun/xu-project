@@ -63,7 +63,8 @@ const formConfig = reactive({
   },
   data: {
     postName: '',
-    postCode: ''
+    postCode: '',
+    status: ''
   },
   item: [
     { prop: 'postName', label: '', itemRender: { placeholder: '岗位名称', name: 'ElInput', clearable: true } },
@@ -99,6 +100,7 @@ const tableConfig = reactive({
     border: true,
     stripe: true,
     size: '',
+    showOverflowTooltip: true
     // tableLayout: 'auto'
     // data: []
   },
