@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, getCurrentInstance, onMounted, nextTick } from 'vue'
+import { reactive, ref, getCurrentInstance, onMounted, nextTick, computed } from 'vue'
 const { $Api } = getCurrentInstance().appContext.config.globalProperties
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { format } from 'date-fns'
@@ -121,12 +121,13 @@ const tableConfig = reactive({
   },
   // 表格列配置
   columns: [
-    { label: '菜单名称', prop: 'postName' },
-    { label: '图标', prop: 'postCode' },
-    { label: '排序', prop: 'postSort', align: 'right', headerAlign: 'left' },
-    { label: '权限标识', prop: 'postSort', align: 'right', headerAlign: 'left' },
-    { label: '组件路径', prop: 'postSort', align: 'right', headerAlign: 'left' },
+    { label: '菜单名称', prop: 'menuName' },
+    { label: '图标', prop: 'icon' },
+    { label: '路由地址', prop: 'path' },
+    { label: '组件路径', prop: 'component', align: 'right', headerAlign: 'left' },
     { label: '状态', prop: 'status', align: 'center', headerAlign: 'left' },
+    { label: '排序', prop: 'orderNum', align: 'right', headerAlign: 'left' },
+    { label: '权限标识', prop: 'perms', align: 'right', headerAlign: 'left' },
     { label: '创建时间', prop: 'createTime', align: 'right', headerAlign: 'left' },
     { label: '备注', prop: 'remark' },
     { label: '操作', prop: 'operation', fixed: 'right', width: '160', align: 'center' }
@@ -163,6 +164,7 @@ const dialogConfig = reactive({
 
 // 新增表单
 const addFormRef = ref(null)
+const curMenuType = ref('0')
 const addFormConfig = reactive({
   config: {
     size: '',
@@ -211,12 +213,17 @@ const addFormConfig = reactive({
           { label: '菜单', value: '1' },
           { label: '按钮', value: '2' }
         ]
+      },
+      onChange: (e) => {
+        console.log(e.target.value);
+        curMenuType.value = e.target.value;
       }
     },
     { prop: 'icon', label: '菜单图标', span: 12, itemRender: { placeholder: '菜单图标', name: 'ElInput', clearable: true } },
     { prop: 'menuName', label: '菜单名称', span: 12, itemRender: { placeholder: '菜单名称', name: 'ElInput', clearable: true } },
     { prop: 'orderNum', label: '显示排序', span: 12, itemRender: { placeholder: '显示排序', name: 'ElInputNumber', min: 1, max: 10 } },
     {
+      show: computed(() => curMenuType.value === '1'),
       prop: 'isFrame',
       label: '是否外链',
       span: 12,
@@ -320,6 +327,7 @@ const editHandle = (row, index) => {
 
   nextTick(() => {
     addFormRef.value.formData.id = row.id
+    curMenuType.value = row.menuType;
     Object.keys(addFormRef.value.formData).forEach(key => {
       addFormRef.value.formData[key] = row[key]
     })

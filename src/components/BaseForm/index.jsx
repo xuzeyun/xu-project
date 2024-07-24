@@ -17,7 +17,7 @@ const BaseForm = defineComponent({
 
     const formRef = ref(null)
     // 表单动态数据
-    const formData = reactive({...attrs.data })
+    const formData = reactive({ ...attrs.data })
 
     // 表单重置
     const reset = () => {
@@ -34,7 +34,7 @@ const BaseForm = defineComponent({
     }
     const submitHandle = async formEl => {
       if (!formEl) return
-      let data = await formEl.validate((valid) => {
+      let data = await formEl.validate(valid => {
         return valid
       })
       return data
@@ -64,8 +64,11 @@ const BaseForm = defineComponent({
                   console.error(`未找到组件: ${item.itemRender.name}`)
                   return null
                 }
-                return this.attrs.config.inline ? getFormItem(this.formData) : <ElCol span={item.span}>{getFormItem(this.formData)}</ElCol>
-
+                if(this.attrs.config.inline){
+                  return item.show === false ? null : getFormItem(this.formData)
+                }else{
+                  return item.show === false ? null : <ElCol span={item.span}>{getFormItem(this.formData)}</ElCol>
+                }
                 function getFormItem(formData) {
                   return (
                     <ElFormItem {...item}>
@@ -84,7 +87,7 @@ const BaseForm = defineComponent({
                             ? item.itemRender.options.map(optionItem => {
                                 return item.itemRender.type === 'button' ? (
                                   // 暂时无效
-                                  <ElRadioButton {...optionItem} key={optionItem.value}/>
+                                  <ElRadioButton {...optionItem} key={optionItem.value} />
                                 ) : (
                                   <ElRadio {...optionItem} key={optionItem.value}>
                                     {optionItem.label}
