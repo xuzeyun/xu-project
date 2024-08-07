@@ -35,7 +35,15 @@
   <!-- 弹窗组件 -->
   <BaseDialog ref="dialogRef" v-bind="dialogConfig">
     <!-- 表单组件 -->
-    <BaseForm ref="addFormRef" v-bind="addFormConfig"> </BaseForm>
+    <BaseForm ref="addFormRef" v-bind="addFormConfig">
+      <template #icon="{item}">
+        <b>{{ item.label }}</b>
+        <!-- <span style="margin-right: 8px">{{ scope.label }}</span>
+        <span>
+          {{ scope.value }}
+        </span> -->
+      </template>
+    </BaseForm>
 
     <template #footer>
       <el-button type="primary" @click="curSaveType === 1 ? addSubmit() : editSubmit()">确认</el-button>
@@ -171,30 +179,28 @@ const addFormConfig = reactive({
     labelWidth: 80,
     inline: false,
     rules: {
+      parentId: [{ required: true, message: '请选择', trigger: 'blur' }],
       menuName: [
         { required: true, message: '请输入', trigger: 'blur' },
-        { min: 2, max: 10, message: '2~10个字符', trigger: 'blur' }
+        { min: 2, max: 20, message: '2~20个字符', trigger: 'blur' }
       ],
-      menuType: [
-        { required: true, message: '请选择', trigger: 'blur' },
-        // { min: 2, max: 20, message: '2~20个字符', trigger: 'blur' }
-      ]
+      orderNum: [{ required: true, message: '请输入', trigger: 'blur' }],
+      path: [{ required: true, message: '请输入', trigger: 'blur' }]
     }
   },
   data: {
-    parentId: 0,//上级菜单
-    component: '',// 组件路径
-    icon: '',//菜单图标
-    isCache: '0',//是否缓存
-    isFrame: '0',//是否外链
-    menuName: '',//菜单名称
-    menuType: '0',//菜单类型
-    orderNum: 1,//显示排序
-    path: '',//路由地址
-    perms: '',//权限标识
-    query: '',//路由参数
-    status: '0',//菜单状态
-    visible: '0',//显示状态
+    parentId: 0, //上级菜单
+    component: '', // 组件路径
+    icon: '', //菜单图标
+    isCache: '0', //是否缓存
+    menuName: '', //菜单名称
+    menuType: '0', //菜单类型
+    orderNum: 1, //显示排序
+    path: '', //路由地址
+    perms: '', //权限标识
+    query: '', //路由参数
+    status: '0', //菜单状态
+    visible: '0', //显示状态
     remark: '',
     createTime: ''
   },
@@ -214,33 +220,51 @@ const addFormConfig = reactive({
           { label: '按钮', value: '2' }
         ]
       },
-      onChange: (e) => {
-        console.log(e.target.value);
-        curMenuType.value = e.target.value;
+      onChange: e => {
+        console.log(e.target.value)
+        curMenuType.value = e.target.value
       }
     },
-    { prop: 'icon', label: '菜单图标', span: 12, itemRender: { placeholder: '菜单图标', name: 'ElInput', clearable: true } },
-    { prop: 'menuName', label: '菜单名称', span: 12, itemRender: { placeholder: '菜单名称', name: 'ElInput', clearable: true } },
-    { prop: 'orderNum', label: '显示排序', span: 12, itemRender: { placeholder: '显示排序', name: 'ElInputNumber', min: 1, max: 10 } },
+    // v-model="value"
+    // filterable
+    // :options="options"
+    // placeholder="Please select"
+    // style="width: 240px"
+    // multiple
     {
-      show: computed(() => curMenuType.value === '1'),
-      prop: 'isFrame',
-      label: '是否外链',
+      prop: 'icon',
+      label: '菜单图标',
       span: 12,
       itemRender: {
-        placeholder: '是否外链',
-        name: 'ElRadioGroup',
-        // type: 'button',
+        placeholder: '菜单图标',
+        name: 'ElSelectV2',
+        clearable: true,
+        filterable: true,
         options: [
           { label: '是', value: '0' },
           { label: '否', value: '1' }
         ]
-      }
+      },
+      show: computed(() => curMenuType.value === '0' || curMenuType.value === '1')
     },
-    { prop: 'path', label: '路由地址', span: 12, itemRender: { placeholder: '路由地址', name: 'ElInput', clearable: true } },
-    { prop: 'component', label: '组件路径', span: 12, itemRender: { placeholder: '组件路径', name: 'ElInput', clearable: true } },
-    { prop: 'perms', label: '权限标识', span: 12, itemRender: { placeholder: '权限标识', name: 'ElInput', clearable: true } },
-    { prop: 'query', label: '路由参数', span: 12, itemRender: { placeholder: '路由参数', name: 'ElInput', clearable: true } },
+    { prop: 'menuName', label: '菜单名称', span: 12, itemRender: { placeholder: '菜单名称', name: 'ElInput', clearable: true } },
+    { prop: 'orderNum', label: '显示排序', span: 12, itemRender: { placeholder: '显示排序', name: 'ElInputNumber', min: 1, max: 10 } },
+    {
+      prop: 'path',
+      label: '路由地址',
+      span: 12,
+      itemRender: { placeholder: '路由地址', name: 'ElInput', clearable: true },
+      show: computed(() => curMenuType.value === '0' || curMenuType.value === '1')
+    },
+    { prop: 'component', label: '组件路径', span: 12, itemRender: { placeholder: '组件路径', name: 'ElInput', clearable: true }, show: computed(() => curMenuType.value === '1') },
+    {
+      prop: 'perms',
+      label: '权限标识',
+      span: 12,
+      itemRender: { placeholder: '权限标识', name: 'ElInput', clearable: true },
+      show: computed(() => curMenuType.value === '1' || curMenuType.value === '2')
+    },
+    { prop: 'query', label: '路由参数', span: 12, itemRender: { placeholder: '路由参数', name: 'ElInput', clearable: true }, show: computed(() => curMenuType.value === '1') },
     {
       prop: 'isCache',
       label: '是否缓存',
@@ -253,7 +277,8 @@ const addFormConfig = reactive({
           { label: '是', value: '0' },
           { label: '否', value: '1' }
         ]
-      }
+      },
+      show: computed(() => curMenuType.value === '0' || curMenuType.value === '1')
     },
     {
       prop: 'visible',
@@ -267,7 +292,8 @@ const addFormConfig = reactive({
           { label: '显示', value: '0' },
           { label: '隐藏', value: '1' }
         ]
-      }
+      },
+      show: computed(() => curMenuType.value === '0' || curMenuType.value === '1')
     },
     {
       prop: 'status',
@@ -291,7 +317,7 @@ const addFormConfig = reactive({
 const addHandle = () => {
   curSaveType.value = 1
   // 新增数据初始化
-  
+  curMenuType.value = '0' // 因为修改会导致值变为其他，所以在这里手动恢复
   dialogConfig.show = true
   dialogRef.value.config.title = '新增'
 }
@@ -327,7 +353,7 @@ const editHandle = (row, index) => {
 
   nextTick(() => {
     addFormRef.value.formData.id = row.id
-    curMenuType.value = row.menuType;
+    curMenuType.value = row.menuType
     Object.keys(addFormRef.value.formData).forEach(key => {
       addFormRef.value.formData[key] = row[key]
     })
