@@ -74,9 +74,9 @@ const BaseForm = defineComponent({
                   return (
                     <ElFormItem {...item}>
                       <Component {...item.itemRender} vModel={formData[item.prop]}>
-                        {{
+                        {/* {{
                           default: (scope) => this.$slots[item.prop]?.(scope)
-                        }}
+                        }} */}
                         {item.itemRender.name === 'ElSelect'
                           ? // select
                             item.itemRender.options.map(optionItem => {

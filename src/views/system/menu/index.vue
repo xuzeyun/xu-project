@@ -36,15 +36,8 @@
   <BaseDialog ref="dialogRef" v-bind="dialogConfig">
     <!-- 表单组件 -->
     <BaseForm ref="addFormRef" v-bind="addFormConfig">
-      <template #icon="{item}">
-        <b>{{ item.label }}</b>
-        <!-- <span style="margin-right: 8px">{{ scope.label }}</span>
-        <span>
-          {{ scope.value }}
-        </span> -->
-      </template>
-    </BaseForm>
 
+    </BaseForm>
     <template #footer>
       <el-button type="primary" @click="curSaveType === 1 ? addSubmit() : editSubmit()">确认</el-button>
       <el-button @click="dialogConfig.show = false">取消</el-button>
@@ -57,11 +50,36 @@ import { reactive, ref, getCurrentInstance, onMounted, nextTick, computed } from
 const { $Api } = getCurrentInstance().appContext.config.globalProperties
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { format } from 'date-fns'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 
 // 当前保存类型（1新增2修改3查看）
 const curSaveType = ref(1)
 // 按钮通用loading
 const loading = ref(false)
+
+const iconOptions = ref([])
+
+onMounted(() => {
+  getIconOptions()
+})
+
+const getIconOptions = () => {
+  for (let [key, item] of Object.entries(fas)) {
+    if (iconOptions.value.length === 0) {
+      iconOptions.value.push({
+        label: item.iconName,
+        value: item.iconName
+      })
+    } else if (iconOptions.value.length > 0) {
+      if (item.iconName != iconOptions.value[iconOptions.value.length - 1].value) {
+        iconOptions.value.push({
+          label: item.iconName,
+          value: item.iconName
+        })
+      }
+    }
+  }
+}
 
 // 表单配置
 const formRef = ref(null)
@@ -141,6 +159,8 @@ const tableConfig = reactive({
     { label: '操作', prop: 'operation', fixed: 'right', width: '160', align: 'center' }
   ]
 })
+
+
 
 // 提交
 const queryHandle = () => {
@@ -240,10 +260,8 @@ const addFormConfig = reactive({
         name: 'ElSelectV2',
         clearable: true,
         filterable: true,
-        options: [
-          { label: '是', value: '0' },
-          { label: '否', value: '1' }
-        ]
+        // multiple: true,
+        options: iconOptions.value
       },
       show: computed(() => curMenuType.value === '0' || curMenuType.value === '1')
     },
