@@ -4,15 +4,31 @@
       <!-- 表单组件 -->
       <BaseForm ref="formRef" v-bind="formConfig">
         <template #btns>
-          <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
-          <el-button type="" title="重置" @click="resetHandle"><font-awesome-icon icon="repeat" /></el-button>
+          <el-button type="primary" title="查询" @click="queryHandle"><RiSearchLine class="g-icon" /></el-button>
+          <el-button type="" title="重置" @click="resetHandle"><RiRefreshLine class="g-icon" /></el-button>
+          <!-- <el-button type="primary" title="查询" @click="queryHandle"><i-line-md-search /></el-button>
+          <el-button type="" title="重置" @click="resetHandle"><i-ant-design-refresh /></el-button>
+          <el-button type="primary" title="查询" @click="queryHandle"><i-tdesign-search /></el-button>
+          <el-button type="" title="重置" @click="resetHandle"><i-tdesign-refresh /></el-button> -->
         </template>
       </BaseForm>
     </el-col>
     <el-col class="g-btns">
-      <el-button size="small" type="primary" @click="addHandle"><font-awesome-icon class="icon" icon="add" />新增</el-button>
+      <!-- <el-button size="small" type="primary" @click="addHandle"><i-tdesign-add class="icon" />新增</el-button>
+      <el-button size="small" type="danger" @click="dialogVisible = true"><i-tdesign-delete class="icon" />删除</el-button>
+      <el-button size="small" type="warning" @click="dialogVisible = true"><i-tdesign-file-export class="icon" />导出</el-button> -->
+
+      <!-- <el-button size="small" type="primary" @click="addHandle"><font-awesome-icon class="icon" icon="plus" />新增</el-button>
       <el-button size="small" type="danger" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="trash" />删除</el-button>
-      <el-button size="small" type="warning" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="file-export" />导出</el-button>
+      <el-button size="small" type="warning" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="file-export" />导出</el-button> -->
+
+      <!-- <el-button size="small" type="primary" @click="addHandle"><i-ant-design-plus class="icon" />新增</el-button>
+      <el-button size="small" type="danger" @click="dialogVisible = true"><i-ant-design-delete class="icon" />删除</el-button>
+      <el-button size="small" type="warning" @click="dialogVisible = true"><i-ant-design-export class="icon" />导出</el-button> -->
+
+      <el-button size="small" type="primary" @click="addHandle"><RiFolderAddFill class="g-icon-r" />新增</el-button>
+      <el-button size="small" type="danger" @click="dialogVisible = true"><RiDeleteBin2Fill class="g-icon-r" />删除</el-button>
+      <el-button size="small" type="warning" @click="dialogVisible = true"><RiExportFill class="g-icon-r" />导出</el-button>
     </el-col>
   </el-row>
   <!-- 表格组件 -->
@@ -22,11 +38,11 @@
       <el-tag v-else-if="scope.row.status === '1'" type="danger">停用</el-tag>
     </template>
     <template #operation="scope">
-      <el-button size="small" type="primary" @click="editHandle(scope.row, scope.$index)">
-        <font-awesome-icon class="icon" icon="edit" />
+      <el-button size="small" link type="primary" @click="editHandle(scope.row, scope.$index)">
+        <RiEditBoxFill class="g-icon" />
       </el-button>
-      <el-button size="small" type="danger" @click="deleteHandle(scope.row, scope.$index)">
-        <font-awesome-icon class="icon" icon="trash" />
+      <el-button size="small" link type="danger" @click="deleteHandle(scope.row, scope.$index)">
+        <RiDeleteBin2Fill class="g-icon" />
       </el-button>
     </template>
   </BaseTable>
@@ -48,6 +64,7 @@ import { reactive, ref, getCurrentInstance, onMounted, nextTick } from 'vue'
 const { $Api } = getCurrentInstance().appContext.config.globalProperties
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { format } from 'date-fns'
+import { RiFolderAddFill, RiDeleteBin2Fill, RiExportFill, RiSearchLine, RiRefreshLine, RiEditBoxFill } from '@remixicon/vue'
 
 // 当前保存类型（1新增2修改3查看）
 const curSaveType = ref(1)
@@ -99,7 +116,7 @@ const tableConfig = reactive({
   config: {
     border: true,
     stripe: true,
-    size: '',
+    size: 'small',
     showOverflowTooltip: true
     // tableLayout: 'auto'
     // data: []
@@ -221,7 +238,7 @@ const addSubmit = async () => {
   let data = addFormRef.value.formData
   let res = await $Api.post('/api/getPostList', {
     ...data,
-    createTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+    createTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
   })
   if (res && res.id) {
     ElMessage.success('操作成功')
@@ -256,7 +273,7 @@ const editSubmit = async () => {
   let flag = await addFormRef.value.submit()
   if (!flag) return
   let data = addFormRef.value.formData
-  if(!data.createTime) data.createTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+  if (!data.createTime) data.createTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
   let res = await $Api.patchById('/api/getPostList', data.id, {
     ...data
   })

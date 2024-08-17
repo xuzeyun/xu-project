@@ -1,5 +1,5 @@
 import { ref, reactive, defineComponent, onMounted } from 'vue'
-import { ElRow, ElCol, ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption, ElInputNumber, ElRadioGroup, ElRadioButton, ElRadio } from 'element-plus'
+import { ElRow, ElCol, ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption, ElInputNumber, ElRadioGroup, ElRadioButton, ElRadio, ElSelectV2 } from 'element-plus'
 
 const BaseForm = defineComponent({
   // props: {
@@ -11,6 +11,7 @@ const BaseForm = defineComponent({
       ElInput,
       ElButton,
       ElSelect,
+      ElSelectV2,
       ElInputNumber,
       ElRadioGroup
     }
@@ -64,15 +65,18 @@ const BaseForm = defineComponent({
                   console.error(`未找到组件: ${item.itemRender.name}`)
                   return null
                 }
-                if(this.attrs.config.inline){
+                if (this.attrs.config.inline) {
                   return item.show === false ? null : getFormItem(this.formData)
-                }else{
+                } else {
                   return item.show === false ? null : <ElCol span={item.span}>{getFormItem(this.formData)}</ElCol>
                 }
                 function getFormItem(formData) {
                   return (
                     <ElFormItem {...item}>
                       <Component {...item.itemRender} vModel={formData[item.prop]}>
+                        {/* {{
+                          default: (scope) => this.$slots[item.prop]?.(scope)
+                        }} */}
                         {item.itemRender.name === 'ElSelect'
                           ? // select
                             item.itemRender.options.map(optionItem => {

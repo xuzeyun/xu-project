@@ -7,21 +7,27 @@
     </div>
 
     <div class="header-li">
-      <el-icon v-if="fullscreen"><font-awesome-icon icon="compress" /></el-icon>
-      <el-icon v-else><font-awesome-icon icon="expand" /></el-icon>
+      <el-button link>
+        <RiRepeatLine class="g-icon" />
+      </el-button>
+    </div>
+    <div class="header-li">
+      <el-button link>
+        <RiFullscreenLine v-if="fullscreen" class="g-icon" />
+        <RiFullscreenExitLine v-else class="g-icon"
+      /></el-button>
     </div>
     <div class="header-li tool dark" @click="toggleDark()">
-      <el-icon v-if="isDark"><Moon /></el-icon>
-      <el-icon v-else><Sunny /></el-icon>
+      <el-button link> <RiSunLine v-if="isDark" class="g-icon" /><RiMoonLine v-else class="g-icon" /></el-button>
     </div>
     <div class="header-li">
       <el-dropdown>
         <el-avatar size="small" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item><font-awesome-icon class="g-icon" icon="user" />个人中心</el-dropdown-item>
-            <el-dropdown-item><font-awesome-icon class="g-icon" icon="broom-ball" />主题配色</el-dropdown-item>
-            <el-dropdown-item divided @click="exitHandle"><font-awesome-icon class="g-icon" icon="reply" />退出登录</el-dropdown-item>
+            <el-dropdown-item><RiUserLine class="g-icon-r" />个人中心</el-dropdown-item>
+            <el-dropdown-item><RiTShirt2Line class="g-icon-r" />主题配色</el-dropdown-item>
+            <el-dropdown-item divided @click="exitHandle"><RiLogoutBoxLine class="g-icon-r" />退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -38,6 +44,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { toggleDark, isDark } from '@/composables'
 import { Sunny, Moon } from '@element-plus/icons-vue'
+import { RiSunLine, RiMoonLine, RiFullscreenLine, RiFullscreenExitLine, RiUserLine, RiTShirt2Line, RiLogoutBoxLine, RiRepeatLine } from '@remixicon/vue'
 
 const changeSize = flag => {}
 
@@ -45,12 +52,9 @@ const fullscreen = ref(false)
 
 onMounted(() => {})
 
-
 const exitHandle = () => {
   alert()
 }
-
-
 </script>
 
 <style lang="scss" scoped>

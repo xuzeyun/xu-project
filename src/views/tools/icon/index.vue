@@ -1,10 +1,18 @@
 <template>
   <el-row class="g-tools">
+    <i-ant-design-home />
+    <i-tdesign-home />
+    <i-line-md-cog-filled-loop />
+    <i-line-md-arrows-horizontal />
+    <i-tdesign-search />
+    <i-tdesign-edit />
+    <i-tdesign-grid-view />
+
     <el-col class="g-forms">
       <!-- 表单组件 -->
       <BaseForm ref="formRef" v-bind="formConfig">
         <template #btns>
-          <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
+          <el-button type="primary" title="查询" @click="queryHandle"><i-tdesign-search /><font-awesome-icon icon="search" /></el-button>
           <el-button type="" title="重置" @click="resetHandle"><font-awesome-icon icon="repeat" /></el-button>
         </template>
       </BaseForm>
@@ -16,13 +24,7 @@
       <span class="g-text-number"
         >当前展示数：<b>{{ initList.length }}</b></span
       >
-      <el-switch
-        v-model="isShowName"
-        inline-prompt
-        active-text="是"
-        inactive-text="否"
-        style="margin-right: 10px;"
-      />
+      <el-switch v-model="isShowName" inline-prompt active-text="是" inactive-text="否" style="margin-right: 10px" />
       <span class="g-text-number">是否显示图标名称</span>
     </el-col>
   </el-row>
@@ -128,7 +130,7 @@ const resetHandle = () => {
       margin: 0;
       font-size: 12px;
       line-height: 14px;
-      color: var(--el-text-color-placeholder)
+      color: var(--el-text-color-placeholder);
     }
   }
 }

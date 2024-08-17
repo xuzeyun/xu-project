@@ -145,9 +145,6 @@ code {
   }
 }
 
-
-
-
 .g-color-priamry {
   color: var(--el-color-primary);
 }
@@ -164,18 +161,32 @@ code {
   color: var(--el-color-info);
 }
 
+.g-icon {
+  width: 1.2em;
+  height: 1.2em;
+}
+.g-icon-r {
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 4px;
+}
 .el-table-fixed-column--right {
-  .icon {
-    // margin: 0 5px;
+  .g-icon {
     cursor: pointer;
-    margin: 0;
+    width: 1.4em;
+    height: 1.4em;
+  }
+  .g-icon-r {
+    cursor: pointer;
+    width: 1.4em;
+    height: 1.4em;
   }
 }
 
-.g-icon{
-  margin-right: 4px;
-  display: flex;
-  width: 24px;
-  justify-content: center;
-  align-items: center;
-}
+// .g-icon {
+//   margin-right: 4px;
+//   display: flex;
+//   width: 24px;
+//   justify-content: center;
+//   align-items: center;
+// }

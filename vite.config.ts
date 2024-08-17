@@ -1,3 +1,4 @@
+import path from 'path'
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
@@ -5,15 +6,24 @@ import { defineConfig } from 'vite'
 // Vue & Jsx
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 
 // elementUiPlus 实现自动导入功能的兄弟组件
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
+const pathSrc = path.resolve(__dirname, 'src')
+
 export default defineConfig({
   publicDir: 'public',
   define: { 'process.env': {} },
+  resolve: {
+    alias: {
+      '@': pathSrc
+    }
+  },
   // 前端服务
   server: {
     host: '0.0.0.0',
@@ -35,10 +45,32 @@ export default defineConfig({
     vue(),
     vueJsx(),
     AutoImport({
-      resolvers: [ElementPlusResolver()]
+      // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
+      imports: ['vue'],
+
+      resolvers: [
+        // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
+        ElementPlusResolver(),
+
+        // 自动导入图标组件
+        IconsResolver({
+          prefix: 'Icon'
+        })
+      ],
+      dts: path.resolve(pathSrc, 'auto-imports.d.ts')
     }),
     Components({
-      resolvers: [ElementPlusResolver()]
+      resolvers: [
+        // 自动注册图标组件
+        IconsResolver({
+          enabledCollections: ['ant-design', 'line-md', 'tdesign']
+        }),
+        // 自动导入 Element Plus 组件
+        ElementPlusResolver()
+      ]
+    }),
+    Icons({
+      autoInstall: true
     })
   ],
   css: {
@@ -52,12 +84,6 @@ export default defineConfig({
           @import '@/styles/variables.scss';
         `
       }
-    }
-  },
-  // 文件路径配置
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
 })

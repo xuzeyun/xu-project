@@ -12,7 +12,8 @@
       <MenuTree :routerList="item.children"></MenuTree>
     </el-sub-menu>
     <el-menu-item class="icon-center" v-else :index="item.meta.allPath" :key="item.meta.allPath">
-      <i class="icon" v-if="item.meta.icon"><font-awesome-icon :icon="item.meta.icon" /></i>
+      <!-- <i class="icon" v-if="item.meta.icon"><font-awesome-icon :icon="item.meta.icon" /></i> -->
+      <i-ant-design-home />
       <template #title>
         <span class="title">{{ item.meta.title }}</span>
       </template>
