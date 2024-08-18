@@ -33,7 +33,10 @@ h2,
 h3,
 spanh4,
 h5,
-h6 {
+h6,
+dl,
+dt,
+dd {
   margin: 0;
   padding: 0;
 }
@@ -168,7 +171,7 @@ code {
 .g-icon-r {
   width: 1.2em;
   height: 1.2em;
-  margin-right: 4px;
+  margin-right: 0.3em;
 }
 .el-table-fixed-column--right {
   .g-icon {
@@ -190,3 +193,13 @@ code {
 //   justify-content: center;
 //   align-items: center;
 // }
+
+.el-drawer {
+  h4 {
+    display: flex;
+    align-items: center;
+    .g-icon-r {
+      color: var(--el-color-primary);
+    }
+  }
+}

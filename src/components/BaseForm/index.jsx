@@ -1,5 +1,5 @@
 import { ref, reactive, defineComponent, onMounted } from 'vue'
-import { ElRow, ElCol, ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption, ElInputNumber, ElRadioGroup, ElRadioButton, ElRadio, ElSelectV2 } from 'element-plus'
+import { ElRow, ElCol, ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption, ElInputNumber, ElRadioGroup, ElRadioButton, ElRadio, ElSelectV2, ElColorPicker } from 'element-plus'
 
 const BaseForm = defineComponent({
   // props: {
@@ -13,7 +13,8 @@ const BaseForm = defineComponent({
       ElSelect,
       ElSelectV2,
       ElInputNumber,
-      ElRadioGroup
+      ElRadioGroup,
+      ElColorPicker
     }
 
     const formRef = ref(null)

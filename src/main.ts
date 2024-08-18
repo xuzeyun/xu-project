@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import App from './App.vue'
 import router from './router'
@@ -28,6 +29,7 @@ library.add(fas)
 const app = createApp(App)
 // pinia
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 // 图标库
 app.component('font-awesome-icon', FontAwesomeIcon)
 // 接口全局挂载

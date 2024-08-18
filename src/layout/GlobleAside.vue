@@ -1,7 +1,9 @@
 <template>
   <div class="on-off" @click="onOff(true)">
-    <font-awesome-icon icon="outdent" v-show="!isCollapse" />
-    <font-awesome-icon icon="indent" v-show="isCollapse" />
+    <RiMenuFold2Line v-show="isCollapse" class="g-icon" />
+    <RiMenuUnfold2Line v-show="!isCollapse" class="g-icon" />
+    <!-- <font-awesome-icon icon="outdent" v-show="!isCollapse" />
+    <font-awesome-icon icon="indent" v-show="isCollapse" /> -->
   </div>
   <el-menu class="app-menu" default-active="1" :collapse="isCollapse" :router="true" @open="open" @close="close">
     <MenuTree :routerList="routes"></MenuTree>
@@ -10,6 +12,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import { RiMenuFold2Line, RiMenuUnfold2Line } from '@remixicon/vue'
 import MenuTree from './MenuTree.vue'
 // 导入使用路由
 import { useRouter } from 'vue-router'
@@ -53,16 +56,15 @@ const onOff = () => {
 }
 .on-off {
   height: 30px;
-  line-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-top: var(--el-border-color) 1px solid;
   width: 100%;
   position: absolute;
   bottom: 0;
   left: 0;
-  text-align: center;
+  font-size: 16px;
   cursor: pointer;
-  .fas {
-    cursor: pointer;
-  }
 }
 </style>

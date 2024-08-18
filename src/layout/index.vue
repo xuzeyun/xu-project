@@ -20,6 +20,7 @@
           <el-row style="margin-bottom: 10px">
             <el-col :span="12">
               <el-breadcrumb separator="/">
+                <!-- <span><RiFunctionLine class="g-icon" /></span> -->
                 <template v-for="(item, index) in breadcrumbArr">
                   <el-breadcrumb-item :key="index" v-if="item">{{ item }}</el-breadcrumb-item>
                 </template>
@@ -38,6 +39,7 @@ import GlobelHeader from '@/layout/GlobleHeader.vue'
 import GlobelFooter from '@/layout/GlobleFooter.vue'
 import GlobelAside from '@/layout/GlobleAside.vue'
 import { useRouter, useRoute } from 'vue-router'
+import { RiFunctionLine } from '@remixicon/vue'
 const router = useRouter()
 const route = useRoute()
 
