@@ -4,13 +4,20 @@
       <!-- 表单组件 -->
       <BaseForm ref="formRef" v-bind="formConfig">
         <template #btns>
-          <el-button type="primary" title="查询" @click="queryHandle"><font-awesome-icon icon="search" /></el-button>
-          <el-button type="" title="重置" @click="resetHandle"><font-awesome-icon icon="repeat" /></el-button>
+          <el-button type="primary" title="查询" @click="queryHandle">
+            <!-- <font-awesome-icon icon="search" /> -->
+          </el-button>
+          <el-button type="" title="重置" @click="resetHandle">
+            <!-- <font-awesome-icon icon="repeat" /> -->
+          </el-button>
         </template>
       </BaseForm>
     </el-col>
     <el-col class="g-btns">
-      <el-button size="small" type="primary" @click="addHandle"><font-awesome-icon class="icon" icon="add" />新增</el-button>
+      <el-button size="small" type="primary" @click="addHandle">
+        <!-- <font-awesome-icon class="icon" icon="add" /> -->
+        新增</el-button
+      >
     </el-col>
   </el-row>
   <!-- 表格组件 -->
@@ -21,13 +28,13 @@
     </template>
     <template #operation="scope">
       <el-button size="small" type="primary" @click="editHandle(scope.row, scope.$index)">
-        <font-awesome-icon class="icon" icon="edit" />
+        <!-- <font-awesome-icon class="icon" icon="edit" /> -->
       </el-button>
       <el-button size="small" type="primary" @click="addHandle(scope.row, scope.$index)">
-        <font-awesome-icon class="icon" icon="add" />
+        <!-- <font-awesome-icon class="icon" icon="add" /> -->
       </el-button>
       <el-button size="small" type="danger" @click="deleteHandle(scope.row, scope.$index)">
-        <font-awesome-icon class="icon" icon="trash" />
+        <!-- <font-awesome-icon class="icon" icon="trash" /> -->
       </el-button>
     </template>
   </BaseTable>
@@ -35,9 +42,7 @@
   <!-- 弹窗组件 -->
   <BaseDialog ref="dialogRef" v-bind="dialogConfig">
     <!-- 表单组件 -->
-    <BaseForm ref="addFormRef" v-bind="addFormConfig">
-
-    </BaseForm>
+    <BaseForm ref="addFormRef" v-bind="addFormConfig"> </BaseForm>
     <template #footer>
       <el-button type="primary" @click="curSaveType === 1 ? addSubmit() : editSubmit()">确认</el-button>
       <el-button @click="dialogConfig.show = false">取消</el-button>
@@ -159,8 +164,6 @@ const tableConfig = reactive({
     { label: '操作', prop: 'operation', fixed: 'right', width: '160', align: 'center' }
   ]
 })
-
-
 
 // 提交
 const queryHandle = () => {

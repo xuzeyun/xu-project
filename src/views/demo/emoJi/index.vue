@@ -6,7 +6,7 @@
   <el-row style="gap: 10px">
     <el-col><el-input type="textarea" v-model="textVal" show-word-limit maxlength="200" rows="10"></el-input></el-col>
     <el-col align="right">
-      <el-button ref="buttonIconRef" type="warning" link><font-awesome-icon icon="face-smile" size="2x"></font-awesome-icon></el-button>
+      <el-button ref="buttonIconRef" type="warning" link></el-button>
       <el-popover ref="popoverRef" :virtual-ref="buttonIconRef" trigger="click" title="选择表情" virtual-triggering>
         <div class="emo-select">
           <template v-for="(item, key, index) in emoList" :key="index"> <img :src="item" alt="" @click="addEmo(key)" /></template>

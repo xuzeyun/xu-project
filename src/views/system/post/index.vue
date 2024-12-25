@@ -6,26 +6,10 @@
         <template #btns>
           <el-button type="primary" title="查询" @click="queryHandle"><RiSearchLine class="g-icon" /></el-button>
           <el-button type="" title="重置" @click="resetHandle"><RiRefreshLine class="g-icon" /></el-button>
-          <!-- <el-button type="primary" title="查询" @click="queryHandle"><i-line-md-search /></el-button>
-          <el-button type="" title="重置" @click="resetHandle"><i-ant-design-refresh /></el-button>
-          <el-button type="primary" title="查询" @click="queryHandle"><i-tdesign-search /></el-button>
-          <el-button type="" title="重置" @click="resetHandle"><i-tdesign-refresh /></el-button> -->
         </template>
       </BaseForm>
     </el-col>
     <el-col class="g-btns">
-      <!-- <el-button size="small" type="primary" @click="addHandle"><i-tdesign-add class="icon" />新增</el-button>
-      <el-button size="small" type="danger" @click="dialogVisible = true"><i-tdesign-delete class="icon" />删除</el-button>
-      <el-button size="small" type="warning" @click="dialogVisible = true"><i-tdesign-file-export class="icon" />导出</el-button> -->
-
-      <!-- <el-button size="small" type="primary" @click="addHandle"><font-awesome-icon class="icon" icon="plus" />新增</el-button>
-      <el-button size="small" type="danger" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="trash" />删除</el-button>
-      <el-button size="small" type="warning" @click="dialogVisible = true"><font-awesome-icon class="icon" icon="file-export" />导出</el-button> -->
-
-      <!-- <el-button size="small" type="primary" @click="addHandle"><i-ant-design-plus class="icon" />新增</el-button>
-      <el-button size="small" type="danger" @click="dialogVisible = true"><i-ant-design-delete class="icon" />删除</el-button>
-      <el-button size="small" type="warning" @click="dialogVisible = true"><i-ant-design-export class="icon" />导出</el-button> -->
-
       <el-button size="small" type="primary" @click="addHandle"><RiFolderAddFill class="g-icon-r" />新增</el-button>
       <el-button size="small" type="danger" @click="dialogVisible = true"><RiDeleteBin2Fill class="g-icon-r" />删除</el-button>
       <el-button size="small" type="warning" @click="dialogVisible = true"><RiExportFill class="g-icon-r" />导出</el-button>
@@ -79,12 +63,12 @@ const formConfig = reactive({
     inline: true
   },
   data: {
-    postName: '',
+    postName: '2123',
     postCode: '',
     status: ''
   },
   item: [
-    { prop: 'postName', label: '', itemRender: { placeholder: '岗位名称', name: 'ElInput', clearable: true } },
+    { prop: 'postName', label: '', itemRender: { placeholder: '岗位名称', name: 'ElInput', clearable: true, disabled: true } },
     { prop: 'postCode', label: '', itemRender: { placeholder: '岗位编码', name: 'ElInput' } },
     {
       prop: 'status',
@@ -144,7 +128,14 @@ const tableConfig = reactive({
     { label: '排序', prop: 'postSort', align: 'right', headerAlign: 'left' },
     { label: '状态', prop: 'status', align: 'center', headerAlign: 'left' },
     { label: '创建时间', prop: 'createTime', align: 'right', headerAlign: 'left' },
-    { label: '备注', prop: 'remark' },
+    {
+      label: '备注',
+      prop: 'remark',
+      children: [
+        { label: '备注A', prop: 'postCode' },
+        { label: '备注B', prop: 'postCode' }
+      ]
+    },
     { label: '操作', prop: 'operation', fixed: 'right', width: '160', align: 'center' }
   ]
 })

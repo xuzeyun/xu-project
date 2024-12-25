@@ -428,28 +428,7 @@
   resolved "https://registry.npmmirror.com/@humanwhocodes/object-schema/-/object-schema-2.0.2.tgz"
   integrity sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==
 
-"@iconify-json/ant-design@^1.1.17":
-  version "1.1.17"
-  resolved "https://registry.npmjs.org/@iconify-json/ant-design/-/ant-design-1.1.17.tgz"
-  integrity sha512-iAhvjWTBH5LJbOPNllg9Fs5FwbR0tqqpCScKCwN4E1hoEPg6U/R16IOfte4jlusom0BnX59o2cDlrkPrB706+Q==
-  dependencies:
-    "@iconify/types" "*"
-
-"@iconify-json/line-md@^1.1.39":
-  version "1.1.39"
-  resolved "https://registry.npmjs.org/@iconify-json/line-md/-/line-md-1.1.39.tgz"
-  integrity sha512-K7NbjYJKDIGwJdn4Cv+rPAoymZDYwHUvYZoTJPB1rbwvq/KuXNPHyh3HL9zShhuCbKjAhTfU+z3qfDCUJwSwQA==
-  dependencies:
-    "@iconify/types" "*"
-
-"@iconify-json/tdesign@^1.1.8":
-  version "1.1.8"
-  resolved "https://registry.npmjs.org/@iconify-json/tdesign/-/tdesign-1.1.8.tgz"
-  integrity sha512-AuUQgdTiG2ED2oXqMhZwZ6wTkOXVAd+4YIJ/Samtx/wf5eKxZAXCGkL1OpFfA6enkzzRPaUkhskyKI6YAZ9oug==
-  dependencies:
-    "@iconify/types" "*"
-
-"@iconify/types@*", "@iconify/types@^2.0.0":
+"@iconify/types@^2.0.0":
   version "2.0.0"
   resolved "https://registry.npmjs.org/@iconify/types/-/types-2.0.0.tgz"
   integrity sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==
@@ -1126,6 +1105,14 @@
   dependencies:
     vue-demi "*"
 
+"@vxe-ui/core@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.npmjs.org/@vxe-ui/core/-/core-4.0.4.tgz"
+  integrity sha512-op14m26U/FofZRVIxL57XKQkYMLbFW4k3PnKtpwdMMm7kRb0uEYhnObFLg+UXH9AIKKsEEab6vbm/E0WtAJ0Vg==
+  dependencies:
+    dom-zindex "^1.0.5"
+    xe-utils "^3.5.30"
+
 abbrev@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmmirror.com/abbrev/-/abbrev-2.0.0.tgz"
@@ -1556,6 +1543,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+dom-zindex@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/dom-zindex/-/dom-zindex-1.0.5.tgz"
+  integrity sha512-fvtsFOawZEkt6/SE67eu5IY+Iid8bHAHoYMnRzk4y3ZycAtZJvx7JqE0c0T5GXfxSXw0XKyYDI9K5VkDpovc6A==
+
 dot-prop@^8.0.2:
   version "8.0.2"
   resolved "https://registry.npmjs.org/dot-prop/-/dot-prop-8.0.2.tgz"
@@ -1958,6 +1950,11 @@ form-data@^4.0.0:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
+
+frappe-gantt@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.npmjs.org/frappe-gantt/-/frappe-gantt-0.9.0.tgz"
+  integrity sha512-vnHeypUjikXv/R4rql8oT+OCutkABGPsR8gaJgoTDf+x0bbDyVAgn48oYZM3oZ1QL4xB8N+Gqgdcxls2H73xFg==
 
 fs.realpath@^1.0.0:
   version "1.0.0"
@@ -2969,6 +2966,11 @@ regexparam@^2.0.2:
   resolved "https://registry.npmjs.org/regexparam/-/regexparam-2.0.2.tgz"
   integrity sha512-A1PeDEYMrkLrfyOwv2jwihXbo9qxdGD3atBYQA9JJgreAx8/7rC6IUkWOw2NQlOxLp2wL0ifQbh1HuidDfYA6w==
 
+remixicon@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.npmjs.org/remixicon/-/remixicon-4.6.0.tgz"
+  integrity sha512-bKM5odjqE1yzVxEZGJE7F79WHhNrJFIKHXR+GG+P1IWXn8AnJZhl8SbIRDJsNAvIqx4VPkNwjuHfc42tutMDpQ==
+
 require-from-string@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmmirror.com/require-from-string/-/require-from-string-2.0.2.tgz"
@@ -3645,6 +3647,20 @@ vue-tsc@^1.8.25:
     "@vue/server-renderer" "3.4.13"
     "@vue/shared" "3.4.13"
 
+vxe-pc-ui@^4.1.8:
+  version "4.1.8"
+  resolved "https://registry.npmjs.org/vxe-pc-ui/-/vxe-pc-ui-4.1.8.tgz"
+  integrity sha512-fWfnJ6A/J5SABa1p0tx5N1pVt+tDlrQA4cx9DqYk/b2WmpbbjBTLY7MYTq1znJk3IVnQBt7gsdDv4M9F05qaAg==
+  dependencies:
+    "@vxe-ui/core" "^4.0.4"
+
+vxe-table@^4.7.72:
+  version "4.7.72"
+  resolved "https://registry.npmjs.org/vxe-table/-/vxe-table-4.7.72.tgz"
+  integrity sha512-kv37W5Nt9mmUlNN5lCFrl1oiXiSi/Sbc/Y36TCEuSwLlMHgHqQz0zWB+pJHb4E4xNpYuB/Ik2mELFsAG4xarQQ==
+  dependencies:
+    vxe-pc-ui "^4.1.8"
+
 w3c-xmlserializer@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmmirror.com/w3c-xmlserializer/-/w3c-xmlserializer-5.0.0.tgz"
@@ -3729,6 +3745,11 @@ ws@^8.16.0:
   version "8.16.0"
   resolved "https://registry.npmmirror.com/ws/-/ws-8.16.0.tgz"
   integrity sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==
+
+xe-utils@^3.5.30:
+  version "3.5.30"
+  resolved "https://registry.npmjs.org/xe-utils/-/xe-utils-3.5.30.tgz"
+  integrity sha512-5Ez6JUANpMakduiTLxrNObzqMebnM4697KvHW5okedkUjXvYgGvkbg0tABTkvwDW/Pb09v7vT68dzBOeAuOu0g==
 
 xml-name-validator@^4.0.0:
   version "4.0.0"

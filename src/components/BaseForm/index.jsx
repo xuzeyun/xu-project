@@ -1,5 +1,27 @@
-import { ref, reactive, defineComponent, onMounted } from 'vue'
-import { ElRow, ElCol, ElForm, ElFormItem, ElInput, ElButton, ElButtonGroup, ElSelect, ElOption, ElInputNumber, ElRadioGroup, ElRadioButton, ElRadio, ElSelectV2, ElColorPicker } from 'element-plus'
+import { ref, reactive, defineComponent, onMounted, nextTick } from 'vue'
+import {
+  ElRow,
+  ElCol,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElButton,
+  ElButtonGroup,
+  ElSwitch,
+  ElUpload,
+  ElTreeSelect,
+  ElDatePicker,
+  ElTree,
+  ElSelect,
+  ElOptionGroup,
+  ElOption,
+  ElInputNumber,
+  ElRadioGroup,
+  ElRadioButton,
+  ElRadio,
+  ElSelectV2,
+  ElColorPicker
+} from 'element-plus'
 
 const BaseForm = defineComponent({
   // props: {
@@ -14,7 +36,14 @@ const BaseForm = defineComponent({
       ElSelectV2,
       ElInputNumber,
       ElRadioGroup,
-      ElColorPicker
+      ElColorPicker,
+      ElSwitch,
+      ElTreeSelect,
+      ElTree,
+      ElDatePicker,
+      ElOptionGroup,
+      ElUpload,
+      ElButtonGroup
     }
 
     const formRef = ref(null)
@@ -41,13 +70,43 @@ const BaseForm = defineComponent({
       })
       return data
     }
+
+    // 树形数据
+    const treeRef = ref(null)
+
+    onMounted(() => {
+      nextTick(() => {
+        // attrs.item.forEach(item => {
+        //   if(item)
+        // })
+        for (const item of attrs.item) {
+          if (item.itemRender.name === 'ElTree') {
+            // treeRef.value.setCheckedKeys(formData[item.prop], true)
+            for (const iterator of formData[item.prop]) {
+              treeRef.value.setChecked(iterator, true, false)
+            }
+          }
+        }
+        // treeRef.value.
+      })
+    })
+
+    const treeChange = (data, node, propName) => {
+      nextTick(() => {
+        let ids = treeRef.value.getCheckedNodes(false, true).map(item => item.id)
+        formData[propName] = ids
+      })
+    }
+
     return {
       attrs,
       formRef,
+      treeRef,
       formData,
       tabs,
       reset,
-      submit
+      submit,
+      treeChange
     }
   },
   render() {
@@ -69,39 +128,78 @@ const BaseForm = defineComponent({
                 if (this.attrs.config.inline) {
                   return item.show === false ? null : getFormItem(this.formData)
                 } else {
-                  return item.show === false ? null : <ElCol span={item.span}>{getFormItem(this.formData)}</ElCol>
+                  return item.show === false ? null : <ElCol span={item.span}>{getFormItem(this.formData, this)}</ElCol>
                 }
-                function getFormItem(formData) {
+                function getFormItem(formData, _this) {
                   return (
                     <ElFormItem {...item}>
-                      <Component {...item.itemRender} vModel={formData[item.prop]}>
-                        {/* {{
+                      {item.itemRender.name === 'ElTree' ? (
+                        <ElTree
+                          ref="treeRef"
+                          {...item.itemRender}
+                          vModel={formData[item.prop]}
+                          defaultExpandedKeys={formData[item.prop]}
+                          onCheck={(data, node) => {
+                            _this.treeChange(data, node, item.prop)
+                          }}
+                        ></ElTree>
+                      ) : (
+                        <Component {...item.itemRender} vModel={formData[item.prop]}>
+                          {/* {{
                           default: (scope) => this.$slots[item.prop]?.(scope)
                         }} */}
-                        {item.itemRender.name === 'ElSelect'
-                          ? // select
-                            item.itemRender.options.map(optionItem => {
-                              return (
-                                <ElOption {...optionItem} key={optionItem.value}>
-                                  {optionItem.label}
-                                </ElOption>
-                              )
-                            })
-                          : // el-radio-group
-                            item.itemRender.name === 'ElRadioGroup'
-                            ? item.itemRender.options.map(optionItem => {
-                                return item.itemRender.type === 'button' ? (
-                                  // 暂时无效
-                                  <ElRadioButton {...optionItem} key={optionItem.value} />
-                                ) : (
-                                  <ElRadio {...optionItem} key={optionItem.value}>
-                                    {optionItem.label}
-                                  </ElRadio>
+                          {item.itemRender.name === 'ElSelect' ? (
+                            // select
+                            // select 插槽自定义
+                            item.itemRender.isSlot ? (
+                              { default: scope => this.$slots[item.prop]?.(scope) }
+                            ) : // select 选项分组
+                            item.itemRender.group ? (
+                              item.itemRender.options.map(optionGroup => {
+                                return (
+                                  <ElOptionGroup label={optionGroup.label} key={optionGroup.label}>
+                                    {optionGroup.options.map(optionItem => {
+                                      return (
+                                        <ElOption {...optionItem} key={optionItem.value}>
+                                          {optionItem.label}
+                                        </ElOption>
+                                      )
+                                    })}
+                                  </ElOptionGroup>
                                 )
                               })
-                            : null}
-                        {/* ElRadioButton */}
-                      </Component>
+                            ) : (
+                              item.itemRender.options.map(optionItem => {
+                                return (
+                                  <ElOption {...optionItem} key={optionItem.value}>
+                                    {optionItem.label}
+                                  </ElOption>
+                                )
+                              })
+                            )
+                          ) : // select 普通
+                          item.itemRender.name === 'ElRadioGroup' ? (
+                            item.itemRender.options.map(optionItem => {
+                              return item.itemRender.type === 'button' ? (
+                                // 暂时无效
+                                <ElRadioButton {...optionItem} key={optionItem.value} />
+                              ) : (
+                                <ElRadio {...optionItem} key={optionItem.value}>
+                                  {optionItem.label}
+                                </ElRadio>
+                              )
+                            })
+                          ) : // 上传控件
+                          item.itemRender.name === 'ElUpload' ? (
+                            // {
+                            //   trigger: () => (<ElButton type="primary">select file</ElButton>),
+                            //   tip: () => (<div class="el-upload__tip">jpg/png files with a size less than 500kb</div>)
+                            // }
+                            <ElButton type="primary">上传文件</ElButton>
+                          ) : null}
+                          {/* ElRadioButton */}
+                        </Component>
+                      )}
                     </ElFormItem>
                   )
                 }

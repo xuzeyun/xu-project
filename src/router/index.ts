@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createRouter, createWebHistory } from 'vue-router'
 /* Layout */
 import Layout from '@/layout/index.vue'
@@ -9,31 +10,46 @@ const router = createRouter({
       path: '/',
       name: '根',
       component: Layout,
-      meta: { title: '', icon: '', allPath: '/' },
+      redirect: '/home',
+      meta: { title: '', icon: '', allPath: '/home' },
       children: [
         {
           path: 'home',
           name: 'home',
           component: () => import('@/views/home/index.vue'),
-          meta: { title: '主页', icon: 'house', allPath: '/home' }
+          meta: { title: '主页', icon: '', allPath: '/home' }
         },
         {
           path: 'demo',
           name: 'demo',
-          meta: { title: '开发示例', icon: 'book', allPath: '/demo' },
+          meta: { title: '开发示例', icon: '', allPath: '/demo' },
           children: [
             {
               path: 'emoji',
               name: 'emoji',
-              component: () => import('@/views/demo/emoJi/index.vue'),
-              meta: { title: '表情选择器', icon: '', allPath: '/demo/emoji' }
+              meta: { title: '表情选择器', icon: '', allPath: '/demo/emoji' },
+              children: [
+                {
+                  path: 'emoji',
+                  name: 'emoji',
+                  component: () => import('@/views/demo/emoJi/index.vue'),
+                  meta: { title: '表情选择器', icon: '', allPath: '/demo/emoji' }
+                }
+              ]
+            },
+            {
+              path: 'gantt',
+              name: 'gantt',
+              meta: { title: '甘特图', icon: '', allPath: '/demo/gantt' },
+              component: () => import('@/views/demo/gantt/index.vue')
             }
           ]
         },
+
         {
           path: 'system',
           name: 'system',
-          meta: { title: '系统管理', icon: 'gear', allPath: '/system' },
+          meta: { title: '系统管理', icon: '', allPath: '/system' },
           children: [
             {
               path: 'menu',
@@ -55,17 +71,18 @@ const router = createRouter({
             }
           ]
         },
+
         // 开发小工具
         {
           path: 'tools',
           name: 'tools',
-          meta: { title: '小工具', icon: 'fa-solid fa-font-awesome', allPath: '/icon' },
+          meta: { title: '小工具', icon: '', allPath: '/icon' },
           children: [
             {
               path: 'icons',
               name: 'icons',
-              component: () => import('@/views/tools/icon/index.vue'),
-              meta: { title: 'Fas图标库', icon: '', allPath: '/tools/icons' }
+              component: () => import('@/views/tools/icons/index.vue'),
+              meta: { title: '图标库', icon: '', allPath: '/tools/icons' }
             },
             {
               path: 'form',
@@ -78,11 +95,12 @@ const router = createRouter({
               name: 'table',
               component: () => import('@/views/tools/table/index.vue'),
               meta: { title: '表格组件示例', icon: '', allPath: '/tools/table' }
-            },
+            }
           ]
         }
       ]
     },
+
     // 登录
     {
       path: '/login',

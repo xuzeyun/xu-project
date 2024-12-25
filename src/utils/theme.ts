@@ -80,6 +80,14 @@ function updateThemeColorVar({ colors }: Theme) {
       setStyleProperty(`--el-color-${name}-light-7`, dark[7])
       setStyleProperty(`--el-color-${name}-light-8`, dark[8])
       setStyleProperty(`--el-color-${name}-light-9`, dark[9])
+
+      console.log(light[2], 'light2============================')
+      console.log(dark[3], '3')
+      console.log(dark[5], '5')
+      console.log(dark[7], '7')
+      console.log(dark[8], '8')
+      console.log(dark[9], '9')
+      console.log(DEFAULT, 'DEFAULT')
     }
   }
 }

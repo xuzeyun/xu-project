@@ -21,6 +21,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
+  overflow: hidden;
 }
 
 #app,
@@ -62,6 +63,12 @@ code {
   .el-input,
   .el-select {
     width: 200px;
+  }
+  .el-form-item {
+    margin-right: 20px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
 
@@ -202,4 +209,10 @@ code {
       color: var(--el-color-primary);
     }
   }
+}
+
+.el-menu--vertical:not(.el-menu--collapse):not(.el-menu--popup-container) .el-menu-item,
+.el-menu--vertical:not(.el-menu--collapse):not(.el-menu--popup-container) .el-menu-item-group__title,
+.el-menu--vertical:not(.el-menu--collapse):not(.el-menu--popup-container) .el-sub-menu__title {
+  padding-left: calc(var(--el-menu-base-level-padding) + var(--el-menu-level) * var(--el-menu-level-padding) * 1.3);
 }

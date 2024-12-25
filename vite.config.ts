@@ -63,7 +63,7 @@ export default defineConfig({
       resolvers: [
         // 自动注册图标组件
         IconsResolver({
-          enabledCollections: ['ant-design', 'line-md', 'tdesign']
+          enabledCollections: []
         }),
         // 自动导入 Element Plus 组件
         ElementPlusResolver()

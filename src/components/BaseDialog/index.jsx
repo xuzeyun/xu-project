@@ -1,11 +1,16 @@
 import { ref, onMounted, reactive, watch, defineComponent } from 'vue'
 import { ElDialog, ElButtonGroup, ElButton } from 'element-plus'
+import {
+  RiCloseLargeLine,
+  RiFullscreenLine,
+  RiFullscreenExitLine
+} from '@remixicon/vue'
 
-const BaseTable = defineComponent({
+const BaseDialog = defineComponent({
   // props: {
   //   myProp: String
   // },
-  name: 'BaseTable',
+  name: 'BaseDialog',
   setup(props, { attrs }) {
     console.log()
     const show = ref(attrs.show || false)
@@ -17,7 +22,7 @@ const BaseTable = defineComponent({
     )
 
     onMounted(() => {
-      console.log(attrs.config.title);
+      // console.log(attrs.config.title);
     })
 
     watch(
@@ -51,11 +56,11 @@ const BaseTable = defineComponent({
           header: () => (
             <div className="g-dialog-header">
               <h3>{this.config.title}</h3>
-              <a href="javascript:;" onClick={this.viewToggle}>
-                <font-awesome-icon icon={this.config.fullscreen ? 'compress' : 'expand'} />
+              <a href="javascript:;" class="fullscreen" onClick={this.viewToggle}>
+                {this.config.fullscreen ? <RiFullscreenExitLine /> : <RiFullscreenLine />}
               </a>
-              <a href="javascript:;" onClick={this.close}>
-                <font-awesome-icon icon="xmark" />
+              <a href="javascript:;" class="close" onClick={this.close}>
+                <RiCloseLargeLine />
               </a>
             </div>
           ),
@@ -66,4 +71,4 @@ const BaseTable = defineComponent({
   }
 })
 
-export default BaseTable
+export default BaseDialog

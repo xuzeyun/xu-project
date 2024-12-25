@@ -3,3 +3,8 @@
   flex-direction: $direction;
   gap: $gap;
 }
+
+@font-face {
+  font-family: timeFont;
+  src: url(@/assets/fonts/digital-7mono.ttf);
+}

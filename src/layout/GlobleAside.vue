@@ -2,30 +2,54 @@
   <div class="on-off" @click="onOff(true)">
     <RiMenuFold2Line v-show="isCollapse" class="g-icon" />
     <RiMenuUnfold2Line v-show="!isCollapse" class="g-icon" />
-    <!-- <font-awesome-icon icon="outdent" v-show="!isCollapse" />
-    <font-awesome-icon icon="indent" v-show="isCollapse" /> -->
   </div>
-  <el-menu class="app-menu" default-active="1" :collapse="isCollapse" :router="true" @open="open" @close="close">
+  <el-menu class="app-menu" :default-active="curPath" :collapse="isCollapse" :router="true" @open="open" @close="close">
     <MenuTree :routerList="routes"></MenuTree>
   </el-menu>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { RiMenuFold2Line, RiMenuUnfold2Line } from '@remixicon/vue'
 import MenuTree from './MenuTree.vue'
+import { appStore } from '@/stores/app.js'
+const _appStore = appStore()
 // 导入使用路由
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+
 const router = useRouter()
+const route = useRoute()
 
 const routes = computed(() => router.options.routes[0].children)
 
-// const router = VueRouter.createRouter()
+console.log(routes)
+
+// const routes = computed(() => _appStore.menuData)
 
 onMounted(() => {
   // console.log('route')
-  console.log(router, 'route')
+  // console.log(routes, 'routes')
+  // console.log(router, 'route')
+  getCurPath()
 })
+
+// 路由变化时，动态改变菜单状态
+watch(
+  () => route,
+  (newValue, oldValue) => {
+    // newValue === oldValue
+    getCurPath()
+  },
+  { deep: true }
+)
+
+// 当前路由地址
+const curPath = ref('')
+
+// 获取当前路由地址
+const getCurPath = () => {
+  curPath.value = route.path
+}
 
 // 展开菜单
 const open = (key: string, keyPath: string[]) => {
@@ -36,7 +60,7 @@ const close = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 
-const isCollapse = ref(true)
+const isCollapse = ref(false)
 const onOff = () => {
   isCollapse.value = !isCollapse.value
 }
@@ -64,7 +88,7 @@ const onOff = () => {
   position: absolute;
   bottom: 0;
   left: 0;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
 }
 </style>
