@@ -4,6 +4,10 @@ import {
   ElCol,
   ElForm,
   ElFormItem,
+  ElAutocomplete,
+  ElCascader,
+
+
   ElInput,
   ElButton,
   ElButtonGroup,
@@ -20,7 +24,7 @@ import {
   ElRadioButton,
   ElRadio,
   ElSelectV2,
-  ElColorPicker
+  ElColorPicker,
 } from 'element-plus'
 
 const BaseForm = defineComponent({
@@ -30,6 +34,9 @@ const BaseForm = defineComponent({
   name: 'BaseForm',
   setup(props, { attrs }) {
     const tabs = {
+      ElAutocomplete,
+      ElCascader,
+
       ElInput,
       ElButton,
       ElSelect,
@@ -43,7 +50,7 @@ const BaseForm = defineComponent({
       ElDatePicker,
       ElOptionGroup,
       ElUpload,
-      ElButtonGroup
+      ElButtonGroup,
     }
 
     const formRef = ref(null)

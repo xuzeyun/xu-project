@@ -77,10 +77,9 @@ const formConfig = reactive({
   item: [
     {
       prop: 'type',
-      label: '',
+      label: '类别',
       itemRender: {
-        name: 'ElRadioGroup',
-        type: 'button',
+        name: 'ElSelect',
         options: [
           { label: '全部', value: '' },
           { label: '箭头', value: 'Arrows' },
@@ -104,7 +103,7 @@ const formConfig = reactive({
         ]
       }
     },
-    { prop: 'name', label: '', itemRender: { placeholder: '图标名称', name: 'ElInput', clearable: true } }
+    { prop: 'name', label: '关键字', itemRender: { placeholder: '图标名称', name: 'ElInput', clearable: true } }
   ]
 })
 

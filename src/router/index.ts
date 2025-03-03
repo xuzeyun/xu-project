@@ -11,45 +11,18 @@ const router = createRouter({
       name: '根',
       component: Layout,
       redirect: '/home',
-      meta: { title: '', icon: '', allPath: '/home' },
+      meta: { title: 'home', icon: '', allPath: '/home' },
       children: [
         {
           path: 'home',
-          name: 'home',
+          name: '',
           component: () => import('@/views/home/index.vue'),
-          meta: { title: '主页', icon: '', allPath: '/home' }
+          meta: { title: '主页', icon: 'ri-home-line', allPath: '/home' }
         },
-        {
-          path: 'demo',
-          name: 'demo',
-          meta: { title: '开发示例', icon: '', allPath: '/demo' },
-          children: [
-            {
-              path: 'emoji',
-              name: 'emoji',
-              meta: { title: '表情选择器', icon: '', allPath: '/demo/emoji' },
-              children: [
-                {
-                  path: 'emoji',
-                  name: 'emoji',
-                  component: () => import('@/views/demo/emoJi/index.vue'),
-                  meta: { title: '表情选择器', icon: '', allPath: '/demo/emoji' }
-                }
-              ]
-            },
-            {
-              path: 'gantt',
-              name: 'gantt',
-              meta: { title: '甘特图', icon: '', allPath: '/demo/gantt' },
-              component: () => import('@/views/demo/gantt/index.vue')
-            }
-          ]
-        },
-
         {
           path: 'system',
           name: 'system',
-          meta: { title: '系统管理', icon: '', allPath: '/system' },
+          meta: { title: '系统管理', icon: 'ri-settings-line', allPath: '/system' },
           children: [
             {
               path: 'menu',
@@ -76,7 +49,7 @@ const router = createRouter({
         {
           path: 'tools',
           name: 'tools',
-          meta: { title: '小工具', icon: '', allPath: '/icon' },
+          meta: { title: '开发', icon: 'ri-braces-line', allPath: '/tools' },
           children: [
             {
               path: 'icons',
@@ -95,6 +68,18 @@ const router = createRouter({
               name: 'table',
               component: () => import('@/views/tools/table/index.vue'),
               meta: { title: '表格组件示例', icon: '', allPath: '/tools/table' }
+            },
+            {
+              path: 'emoji',
+              name: 'emoji',
+              component: () => import('@/views/tools/emoJi/index.vue'),
+              meta: { title: '表情选择器', icon: '', allPath: '/tools/emoji' }
+            },
+            {
+              path: 'gantt',
+              name: 'gantt',
+              meta: { title: '甘特图', icon: '', allPath: '/tools/gantt' },
+              component: () => import('@/views/tools/gantt/index.vue')
             }
           ]
         }

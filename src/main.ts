@@ -12,6 +12,7 @@ import * as Utils from '@/utils'
 import 'remixicon/fonts/remixicon.css'
 import 'animate.css'
 import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 import './styles/index.scss'
 
 // 全局组件

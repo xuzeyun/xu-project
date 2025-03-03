@@ -78,8 +78,7 @@ export default defineConfig({
       scss: {
         // charest:false,
         additionalData: `
-          @use 'node_modules/element-plus/theme-chalk/src/dark/css-vars.scss' as *;
-          @use '@/styles/element/reElementUI.scss';
+          @use '@/styles/theme/theme.scss';
           @import '@/styles/mixin.scss';
           @import '@/styles/variables.scss';
         `
