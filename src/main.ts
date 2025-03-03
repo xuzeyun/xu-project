@@ -19,6 +19,7 @@ import './styles/index.scss'
 import BaseTable from '@/components/BaseTable/index.jsx'
 import BaseForm from '@/components/BaseForm/index.jsx'
 import BaseDialog from '@/components/BaseDialog/index.jsx'
+import BasePdf from '@/components/BasePdf/index.vue'
 // import BaseGantt from '@/components/BaseGantt/index.vue'
 
 const app = createApp(App)
@@ -38,6 +39,9 @@ app.component('BaseTable', BaseTable)
 app.component('BaseForm', BaseForm)
 // 弹窗
 app.component('BaseDialog', BaseDialog)
+// PDF
+app.component('BasePdf', BasePdf)
+
 // 甘特
 // app.component('BaseGantt', BaseGantt)
 

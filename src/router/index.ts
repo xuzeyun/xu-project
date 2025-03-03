@@ -76,6 +76,18 @@ const router = createRouter({
               meta: { title: '表情选择器', icon: '', allPath: '/tools/emoji' }
             },
             {
+              path: 'pdf',
+              name: 'pdf',
+              meta: { title: 'PDF阅读器', icon: '', allPath: '/tools/pdf' },
+              component: () => import('@/views/tools/pdf/index.vue')
+            },
+            {
+              path: 'excelImport',
+              name: 'excelImport',
+              meta: { title: 'Excel本地导入', icon: '', allPath: '/tools/excelImport' },
+              component: () => import('@/views/tools/excelImport/index.vue')
+            },
+            {
               path: 'gantt',
               name: 'gantt',
               meta: { title: '甘特图', icon: '', allPath: '/tools/gantt' },
