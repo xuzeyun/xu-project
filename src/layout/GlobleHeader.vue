@@ -25,7 +25,7 @@
       <!-- 系统切换 -->
       <div class="header-li">
         <el-dropdown>
-          <el-button link><RiRecycleLine class="g-icon" /></el-button>
+          <el-button link><i class="g-icon ri-recycle-line" /></el-button>
           <template #dropdown>
             <!-- <el-dropdown-menu>
               <el-dropdown-item @click="systemChange('态势展现系统')" disabled>态势展现系统</el-dropdown-item>
@@ -47,48 +47,54 @@
       <!-- 全屏显示 -->
       <div class="header-li">
         <el-button link @click="fullScreenToggle">
-          <RiFullscreenLine v-if="!fullscreen" class="g-icon" />
-          <RiFullscreenExitLine v-else class="g-icon"
+          <i v-if="!fullscreen" class="g-icon ri-fullscreen-line" />
+          <i v-else class="g-icon ri-fullscreen-exit-line"
         /></el-button>
       </div>
 
       <!-- 主题切换 -->
       <div class="header-li">
         <el-dropdown>
-          <el-button link><RiTShirt2Line class="g-icon" /></el-button>
+          <el-button link><i class="ri-t-shirt-2-line g-icon" /></el-button>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="themeToggle('')"><RiSunLine class="g-icon-r" />默认</el-dropdown-item>
-              <el-dropdown-item @click="themeToggle('dark')"><RiMoonLine class="g-icon-r" />暗黑</el-dropdown-item>
-              <el-dropdown-item @click="themeToggle('tech')"><RiCpuLine class="g-icon-r" />科技</el-dropdown-item>
-              <el-dropdown-item @click="themeToggle('forest')"><RiLeafLine class="g-icon-r" />丛林</el-dropdown-item>
+              <el-dropdown-item @click="themeToggle('')"><i class="ri-sun-line g-icon-r" />默认</el-dropdown-item>
+              <el-dropdown-item @click="themeToggle('dark')"><i class="ri-moon-line g-icon-r" />暗黑</el-dropdown-item>
+              <el-dropdown-item @click="themeToggle('tech')"><i class="ri-cpu-line g-icon-r" />科技</el-dropdown-item>
+              <el-dropdown-item @click="themeToggle('forest')"><i class="ri-leaf-line g-icon-r" />丛林</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </div>
       <!-- 系统设置 -->
       <div class="header-li">
-        <el-button link><RiSettingsLine class="g-icon" @click="paletteOpen" /></el-button>
+        <el-button link><i class="ri-settings-line g-icon" @click="paletteOpen" /></el-button>
       </div>
       <div class="header-li">
         <el-dropdown>
-          <el-avatar size="small"><RiUser3Fill class="g-icon" style="font-size: 12px" /></el-avatar>
-          <!-- <el-avatar size="small" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" /> -->
+          <el-avatar size="small"><i class="ri-user-3-fill g-icon" style="font-size: 12px" /></el-avatar>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item><RiUserLine class="g-icon-r" />个人中心</el-dropdown-item>
-              <el-dropdown-item divided @click="exitHandle"><RiLogoutBoxLine class="g-icon-r" />退出登录</el-dropdown-item>
+              <el-dropdown-item><i class="ri-user-line g-icon-r" />个人中心</el-dropdown-item>
+              <el-dropdown-item divided @click="exitHandle"><i class="ri-logout-box-line g-icon-r" />退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </div>
     </div>
     <el-drawer v-model="drawer" direction="rtl" title="系统设置">
-      <h4><RiLayoutTop2Line class="g-icon-r" />头部标题位置</h4>
+      <h4><i class="ri-layout-top-2-line g-icon-r" />系统名称位置</h4>
       <el-row>
         <el-radio-group v-model="settings.logoAlign">
           <el-radio-button label="居左展示" value="left" />
           <el-radio-button label="居中展示" value="center" />
+        </el-radio-group>
+      </el-row>
+      <h4><i class="ri-layout-top-2-line g-icon-r" />菜单位置</h4>
+      <el-row>
+        <el-radio-group v-model="settings.logoAlign">
+          <el-radio-button label="顶部" value="left" />
+          <el-radio-button label="左侧" value="center" />
         </el-radio-group>
       </el-row>
       <template #footer>
@@ -103,24 +109,24 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed, getCurrentInstance } from 'vue'
-import {
-  RiSunLine,
-  RiMoonLine,
-  RiFullscreenLine,
-  RiFullscreenExitLine,
-  RiUserLine,
-  RiTShirt2Line,
-  RiLogoutBoxLine,
-  RiExchangeBoxLine,
-  RiPaletteLine,
-  RiSave3Line,
-  RiSettingsLine,
-  RiRecycleLine,
-  RiCpuLine,
-  RiLeafLine,
-  RiLayoutTop2Line,
-  RiUser3Fill
-} from '@remixicon/vue'
+// import {
+//   RiSunLine,
+//   RiMoonLine,
+//   RiFullscreenLine,
+//   RiFullscreenExitLine,
+//   RiUserLine,
+//   RiTShirt2Line,
+//   RiLogoutBoxLine,
+//   RiExchangeBoxLine,
+//   RiPaletteLine,
+//   RiSave3Line,
+//   RiSettingsLine,
+//   RiRecycleLine,
+//   RiCpuLine,
+//   RiLeafLine,
+//   RiLayoutTop2Line,
+//   RiUser3Fill
+// } from '@remixicon/vue'
 // import { Theme, getTheme, setTheme } from '../utils/theme'
 // import { useDark, useToggle } from '@vueuse/core'
 const { $Api } = getCurrentInstance().appContext.config.globalProperties

@@ -5,10 +5,10 @@
       <BaseForm ref="formRef" v-bind="formConfig">
         <template #btns>
           <el-button type="primary" title="查询" @click="queryHandle">
-            <!-- <font-awesome-icon icon="search" /> -->
+            <i class="ri-search-line"></i>
           </el-button>
           <el-button type="" title="重置" @click="resetHandle">
-            <!-- <font-awesome-icon icon="repeat" /> -->
+            <i class="ri-repeat-line"></i>
           </el-button>
         </template>
       </BaseForm>

@@ -1,7 +1,7 @@
 <template>
   <div class="on-off" @click="onOff(true)">
-    <RiMenuFold2Line v-show="isCollapse" class="g-icon" />
-    <RiMenuUnfold2Line v-show="!isCollapse" class="g-icon" />
+    <i v-show="isCollapse" class="ri-menu-fold-2-fill g-icon" />
+    <i v-show="!isCollapse" class="ri-menu-unfold-2-fill g-icon" />
   </div>
   <el-menu class="app-menu" :default-active="curPath" :collapse="isCollapse" :router="true" @open="open" @close="close">
     <MenuTree :routerList="routes"></MenuTree>
@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
-import { RiMenuFold2Line, RiMenuUnfold2Line } from '@remixicon/vue'
+// import { RiMenuFold2Line, RiMenuUnfold2Line } from '@remixicon/vue'
 import MenuTree from './MenuTree.vue'
 import { appStore } from '@/stores/app.js'
 const _appStore = appStore()

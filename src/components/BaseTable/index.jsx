@@ -1,7 +1,6 @@
 import { ref, onMounted, reactive, defineComponent } from 'vue'
-import { ElRow, ElTable, ElTableColumn, ElPagination } from 'element-plus'
+import { ElTable, ElTableColumn, ElPagination } from 'element-plus'
 // import Filter from './Filter.vue'
-
 
 const BaseTable = defineComponent({
   // props: {
@@ -63,7 +62,6 @@ const BaseTable = defineComponent({
       loadTableData(pageObj.page, pageObj.limit)
     }
 
-
     return {
       attrs,
       pageObj,
@@ -78,41 +76,44 @@ const BaseTable = defineComponent({
     }
   },
   render() {
-    return ([
-      <ElRow class="g-table-self">
+    return [
+      <div class="g-table-self">
         {/* 表格 */}
-        <ElTable ref="tableRef"  {...this.attrs.config} data={this.tableData}>
+        <ElTable ref="tableRef" {...this.attrs.config} data={this.tableData}>
           {this.attrs.config.selection ? <ElTableColumn type="selection" width="50" align="center"></ElTableColumn> : null}
           <ElTableColumn label="#" type="index" align="center" width="60"></ElTableColumn>
           {/* 判断 如果有列配置 循环列 */}
           {this.attrs.columns && this.attrs.columns.length > 0
             ? this.attrs.columns.map(item => {
-              // 单级表头 和 多级表头（目前支持二级，待优化）
-              return (!item.children ? <ElTableColumn {...item} key={item.prop}>
-                {{
-                  default: (scope) => this.$slots[item.prop]?.(scope)
-                }}
-              </ElTableColumn> : <ElTableColumn {...item} key={item.prop}>
-                {
-                  item.children.map(itemChild => {
-                    return (<ElTableColumn {...itemChild} key={itemChild.prop}>
-                      {{
-                        default: (scope) => this.$slots[itemChild.prop]?.(scope)
-                      }}
-                    </ElTableColumn>)
-                  })
-                }
-                
-              </ElTableColumn>)
-            })
+                // 单级表头 和 多级表头（目前支持二级，待优化）
+                return !item.children ? (
+                  <ElTableColumn {...item} key={item.prop}>
+                    {{
+                      default: scope => this.$slots[item.prop]?.(scope)
+                    }}
+                  </ElTableColumn>
+                ) : (
+                  <ElTableColumn {...item} key={item.prop}>
+                    {item.children.map(itemChild => {
+                      return (
+                        <ElTableColumn {...itemChild} key={itemChild.prop}>
+                          {{
+                            default: scope => this.$slots[itemChild.prop]?.(scope)
+                          }}
+                        </ElTableColumn>
+                      )
+                    })}
+                  </ElTableColumn>
+                )
+              })
             : '请配置列'}
         </ElTable>
-      </ElRow>,
-      <ElRow class="g-table-pafer">
-        {this.attrs.page.show ? (
+      </div>,
+      this.attrs.page.show ? (
+        <div class="g-table-pafer">
           <ElPagination
-            vModel: currentPage={this.pageObj.page}
-            vModel: pageSize={this.pageObj.limit}
+            vModel:currentPage={this.pageObj.page}
+            vModel:pageSize={this.pageObj.limit}
             total={this.pageObj.total}
             pageSizes={this.pageObj.sizes}
             background={'background'}
@@ -122,9 +123,9 @@ const BaseTable = defineComponent({
             // size={attrs.config.size}
             size=""
           ></ElPagination>
-        ) : null}
-      </ElRow>
-    ])
+        </div>
+      ) : null
+    ]
   }
 })
 

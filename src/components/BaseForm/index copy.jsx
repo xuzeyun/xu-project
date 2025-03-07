@@ -6,32 +6,25 @@ import {
   ElFormItem,
   ElAutocomplete,
   ElCascader,
+
+
   ElInput,
   ElButton,
   ElButtonGroup,
+  ElSwitch,
+  ElUpload,
+  ElTreeSelect,
   ElDatePicker,
   ElTree,
   ElSelect,
   ElOptionGroup,
   ElOption,
-  ElInputNumber, //数字输入框
-  ElRadioGroup, //单选框
+  ElInputNumber,
+  ElRadioGroup,
   ElRadioButton,
   ElRadio,
-  ElSelectV2, //选择器（虚拟）
-  ElColorPicker, //取色器
-  ElCheckboxGroup, //复选框
-  ElCheckbox,
-  ElInputTag, //标签输入框
-  ElMention, //提及
-  ElRate, //评分
-  ElSlider, //滑块
-  ElSwitch, //开关
-  ElTimePicker,
-  ElTimeSelect,
-  ElTransfer,
-  ElTreeSelect,
-  ElUpload
+  ElSelectV2,
+  ElColorPicker,
 } from 'element-plus'
 
 const BaseForm = defineComponent({
@@ -43,6 +36,7 @@ const BaseForm = defineComponent({
     const tabs = {
       ElAutocomplete,
       ElCascader,
+
       ElInput,
       ElButton,
       ElSelect,
@@ -50,22 +44,13 @@ const BaseForm = defineComponent({
       ElInputNumber,
       ElRadioGroup,
       ElColorPicker,
+      ElSwitch,
+      ElTreeSelect,
       ElTree,
       ElDatePicker,
       ElOptionGroup,
+      ElUpload,
       ElButtonGroup,
-      ElCheckboxGroup,
-      ElCheckbox,
-      ElInputTag,
-      ElMention,
-      ElRate,
-      ElSlider,
-      ElSwitch,
-      ElTimePicker,
-      ElTimeSelect,
-      ElTransfer,
-      ElTreeSelect,
-      ElUpload
     }
 
     const formRef = ref(null)
@@ -155,7 +140,6 @@ const BaseForm = defineComponent({
                 function getFormItem(formData, _this) {
                   return (
                     <ElFormItem {...item}>
-                      {/* {this.$slots.upload?.()} */}
                       {item.itemRender.name === 'ElTree' ? (
                         <ElTree
                           ref="treeRef"
@@ -168,59 +152,58 @@ const BaseForm = defineComponent({
                         ></ElTree>
                       ) : (
                         <Component {...item.itemRender} vModel={formData[item.prop]}>
-                          {/* 检查是否有插槽配置 */}
-                          { item.slotName ? _this.$slots[item.slotName]?.() : null }
-                          {item.itemRender.name === 'ElSelect'
-                            ? // select
-                              // select 插槽自定义
-                              item.itemRender.isSlot
-                              ? { default: scope => this.$slots[item.prop]?.(scope) }
-                              : // select 选项分组
-                                item.itemRender.group
-                                ? item.itemRender.options.map(optionGroup => {
-                                    return (
-                                      <ElOptionGroup label={optionGroup.label} key={optionGroup.label}>
-                                        {optionGroup.options.map(optionItem => {
-                                          return (
-                                            <ElOption {...optionItem} key={optionItem.value}>
-                                              {optionItem.label}
-                                            </ElOption>
-                                          )
-                                        })}
-                                      </ElOptionGroup>
-                                    )
-                                  })
-                                : item.itemRender.options.map(optionItem => {
-                                    return (
-                                      <ElOption {...optionItem} key={optionItem.value}>
-                                        {optionItem.label}
-                                      </ElOption>
-                                    )
-                                  })
-                            : // select 普通
-                              item.itemRender.name === 'ElRadioGroup'
-                              ? item.itemRender.options.map(optionItem => {
-                                  return item.itemRender.type === 'button' ? (
-                                    // 暂时无效
-                                    <ElRadioButton {...optionItem} key={optionItem.value} />
-                                  ) : (
-                                    <ElRadio {...optionItem} key={optionItem.value}>
-                                      {optionItem.label}
-                                    </ElRadio>
-                                  )
-                                })
-                              : // ElCheckboxGroup ElCheckbox
-                                item.itemRender.name === 'ElCheckboxGroup'
-                                ? item.itemRender.options.map(optionItem => {
-                                    return <ElCheckbox {...optionItem} key={optionItem.value} />
-                                  })
-                                : // ElUpload
-                                  item.itemRender.name === 'ElUpload'
-                                  ? [
-                                    _this.$slots[item.prop + 'Trigger']?.(),
-                                    _this.$slots[item.prop + 'Tip']?.()
-                                  ]
-                                  : null}
+                          {/* {{
+                          default: (scope) => this.$slots[item.prop]?.(scope)
+                        }} */}
+                          {item.itemRender.name === 'ElSelect' ? (
+                            // select
+                            // select 插槽自定义
+                            item.itemRender.isSlot ? (
+                              { default: scope => this.$slots[item.prop]?.(scope) }
+                            ) : // select 选项分组
+                            item.itemRender.group ? (
+                              item.itemRender.options.map(optionGroup => {
+                                return (
+                                  <ElOptionGroup label={optionGroup.label} key={optionGroup.label}>
+                                    {optionGroup.options.map(optionItem => {
+                                      return (
+                                        <ElOption {...optionItem} key={optionItem.value}>
+                                          {optionItem.label}
+                                        </ElOption>
+                                      )
+                                    })}
+                                  </ElOptionGroup>
+                                )
+                              })
+                            ) : (
+                              item.itemRender.options.map(optionItem => {
+                                return (
+                                  <ElOption {...optionItem} key={optionItem.value}>
+                                    {optionItem.label}
+                                  </ElOption>
+                                )
+                              })
+                            )
+                          ) : // select 普通
+                          item.itemRender.name === 'ElRadioGroup' ? (
+                            item.itemRender.options.map(optionItem => {
+                              return item.itemRender.type === 'button' ? (
+                                // 暂时无效
+                                <ElRadioButton {...optionItem} key={optionItem.value} />
+                              ) : (
+                                <ElRadio {...optionItem} key={optionItem.value}>
+                                  {optionItem.label}
+                                </ElRadio>
+                              )
+                            })
+                          ) : // 上传控件
+                          item.itemRender.name === 'ElUpload' ? (
+                            // {
+                            //   trigger: () => (<ElButton type="primary">select file</ElButton>),
+                            //   tip: () => (<div class="el-upload__tip">jpg/png files with a size less than 500kb</div>)
+                            // }
+                            <ElButton type="primary">上传文件</ElButton>
+                          ) : null}
                           {/* ElRadioButton */}
                         </Component>
                       )}

@@ -5,7 +5,7 @@
       <BaseForm ref="formRef" v-bind="formConfig">
         <template #btns>
           <el-button type="primary" title="查询" @click="queryHandle"><i class="ri-search-line"></i></el-button>
-          <el-button type="" title="重置" @click="resetHandle"><i class="ri-refresh-line"></i></el-button>
+          <el-button type="" title="重置" @click="resetHandle"><i class="ri-repeat-line"></i></el-button>
         </template>
       </BaseForm>
     </el-col>
